@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/topStories"
+            android:title="Top Stories"
+            android:icon="@drawable/topStories"/>
+        <item
+            android:id="@+id/mostPopular"
+            android:icon="@drawable/article"
+            android:title="Most Popular"/>
+        <item
+            android:id="@+id/politics"
+            android:icon="@drawable/capitol"
+            android:title="Politics"/>
+
+    </group>
+
+</menu>
