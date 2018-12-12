@@ -7,7 +7,7 @@
         <item
             android:id="@+id/topStories"
             android:title="Top Stories"
-            android:icon="@drawable/topStories"/>
+            android:icon="@drawable/topstories"/>
         <item
             android:id="@+id/mostPopular"
             android:icon="@drawable/article"
