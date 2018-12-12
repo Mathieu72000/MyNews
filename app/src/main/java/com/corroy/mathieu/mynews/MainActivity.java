@@ -1,6 +1,7 @@
 package com.corroy.mathieu.mynews;
 
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -15,6 +16,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
+
+    //FOR FRAGMENTS
+    // Declare fragment handled by Navigation Drawer
+    private Fragment fragmentTopStories;
+    private Fragment fragmentMostPopular;
+    private Fragment fragmentPolitics;
+
+    //FOR DATA
+    // Identify each fragment with a number
+    private static final int FRAGMENT_TOP_STORIES = 0;
+    private static final int FRAGMENT_MOST_POPULAR = 1;
+    private static final int FRAGMENT_POLITICS = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,12 +57,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         // Handle Navigation Item Click
+        // Show Fragment after user clicked on a menu item
         switch (id){
             case R.id.topStories:
+                this.showFragment(FRAGMENT_TOP_STORIES);
                 break;
             case R.id.mostPopular:
+                this.showFragment(FRAGMENT_MOST_POPULAR);
                 break;
             case R.id.politics:
+                this.showFragment(FRAGMENT_POLITICS);
                 break;
             default:
                 break;
@@ -81,6 +98,50 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void configureNavigationView(){
        this.navigationView = findViewById(R.id.activityMainNavigationView);
        navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    // -----------
+    // FRAGMENTS
+    // -----------
+
+    // Show fragment according an Identifier
+    private void showFragment(int fragmentIdentifier){
+        switch (fragmentIdentifier){
+            case FRAGMENT_TOP_STORIES:
+                this.showTopStoriesFragment();
+                break;
+            case FRAGMENT_MOST_POPULAR:
+                this.showMostPopularFragment();
+                break;
+            case FRAGMENT_POLITICS:
+                this.showPoliticsFragment();
+                break;
+            default:
+                break;
+        }
+    }
+
+    // Create each fragment page and show it
+    private void showTopStoriesFragment(){
+        if(this.fragmentTopStories == null) this.fragmentTopStories = TopStoriesFragment.newInstance();
+        this.startTransactionFragment(this.fragmentTopStories);
+    }
+
+    private void showMostPopularFragment(){
+        if (this.fragmentMostPopular == null) this.fragmentMostPopular = MostPopularFragment.newInstance();
+        this.startTransactionFragment(this.fragmentMostPopular);
+    }
+
+    private void showPoliticsFragment(){
+        if (this.fragmentPolitics == null) this.fragmentPolitics = PoliticsFragment.newInstance();
+        this.startTransactionFragment(this.fragmentPolitics);
+    }
+
+    // Generic method that will replace and show a fragment inside the MainActivity Frame Layout
+    private void startTransactionFragment(Fragment fragment){
+        if (!fragment.isVisible()){
+            getSupportFragmentManager().beginTransaction().replace(R.id.activityMainFrameLayout, fragment).commit();
+        }
     }
 }
 
