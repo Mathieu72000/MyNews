@@ -20,16 +20,17 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
-        android:theme="@style/ToolbarStyle"/>
+        android:theme="@style/ToolbarStyle"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
         <android.support.design.widget.TabLayout
             android:id="@+id/activityMainTabs"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:background="@color/newspaper"
-            app:tabIndicator="@color/newspaper"
+            app:tabBackground="@color/newspaper"
+            app:tabIndicatorColor="@color/yellow"
             app:tabTextColor="@color/white"
-            app:tabSelectedTextColor="@color/colorAccent"/>
+            app:tabSelectedTextColor="@color/yellow"/>
 
         <android.support.v4.view.ViewPager
             android:id="@+id/activityViewPager"

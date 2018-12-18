@@ -1,10 +1,10 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">#46bbd2</item>
-        <item name="colorPrimaryDark">@color/newspaper</item>
+        <item name="colorPrimary">@color/newspaper</item>
+        <item name="colorPrimaryDark">#2da1b9</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
@@ -12,7 +12,7 @@
 
     <!-- Toolbar Theme -->
     <style name="ToolbarStyle" parent="AppTheme">
-        <item name ="android:textColorPrimary">@android:color/black</item>
+        <item name ="android:textColorPrimary">@android:color/white</item>
         <item name ="colorControlNormal">@android:color/white</item>
     </style>
 

@@ -19,17 +19,31 @@ public class PagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position){
-        return "Page" +position;
+
+        switch(position){
+            case 0:
+                return "Top Stories";
+            case 1:
+                return "Most Popular";
+            case 2:
+                return "Politics";
+            default:
+                return "Top Stories";
+        }
     }
 
     public Fragment getItem(int pos){
 
         switch(pos){
 
-        case 0: return TopStoriesFragment.newInstance("First Fragment");
-        case 1: return MostPopularFragment.newInstance("Second Fragment");
-        case 2: return PoliticsFragment.newInstance("Third Fragment");
-        default: return TopStoriesFragment.newInstance("Default Fragment");
+        case 0:
+            return TopStoriesFragment.newInstance("First Fragment");
+        case 1:
+            return MostPopularFragment.newInstance("Second Fragment");
+        case 2:
+            return PoliticsFragment.newInstance("Third Fragment");
+        default:
+            return TopStoriesFragment.newInstance("Default Fragment");
         }
     }
 }
