@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
 import com.corroy.mathieu.mynews.R;
@@ -35,13 +34,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         this.configureNavigationView();
 
+        // Find the ViewPager and configure it with the PagerAdapter
         viewPager = findViewById(R.id.activityViewPager);
         viewPager.setAdapter(new PagerAdapter(getSupportFragmentManager()));
 
+        // Find the TabLayout and configure it in the ViewPager to handle Tabs
         TabLayout tabs = findViewById(R.id.activityMainTabs);
-
         tabs.setupWithViewPager(viewPager);
-        tabs.setTabMode(TabLayout.MODE_FIXED); // MODE FIXED ?
+        tabs.setTabMode(TabLayout.MODE_FIXED);
     }
 
     @Override
@@ -85,8 +85,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         int id = item.getItemId();
 
-        // Handle Navigation Item Click
-        // Set fragment after user clicked on a menu item
+        // Set current location in the ViewPager to handle the position of the fragments
         switch (id){
             case R.id.topStories:
                 viewPager.setCurrentItem(0);
@@ -101,6 +100,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 viewPager.setCurrentItem(0);
                 break;
         }
+
         this.drawerLayout.closeDrawer(GravityCompat.START);
 
         return true;
@@ -130,4 +130,3 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
        navigationView.setNavigationItemSelectedListener(this);
     }
 }
-
