@@ -35,8 +35,6 @@ public class MostPopularFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_most_popular, container, false);
 
-        TextView textView = view.findViewById(R.id.textViewMostPopular);
-        textView.setText(getArguments().getString("color3"));
 
         return view;
     }

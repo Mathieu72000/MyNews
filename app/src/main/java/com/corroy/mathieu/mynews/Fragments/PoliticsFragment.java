@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import com.corroy.mathieu.mynews.R;
 
 public class PoliticsFragment extends Fragment {
@@ -35,9 +34,6 @@ public class PoliticsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_politics, container, false);
-
-        TextView textView = view.findViewById(R.id.textViewPolitics);
-        textView.setText(getArguments().getString("color2"));
 
         return view;
     }

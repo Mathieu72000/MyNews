@@ -37,13 +37,13 @@ public class PagerAdapter extends FragmentPagerAdapter {
         switch(pos){
 
         case 0:
-            return TopStoriesFragment.newInstance("First Fragment");
+            return TopStoriesFragment.newInstance();
         case 1:
             return MostPopularFragment.newInstance("Second Fragment");
         case 2:
             return PoliticsFragment.newInstance("Third Fragment");
         default:
-            return TopStoriesFragment.newInstance("Default Fragment");
+            return TopStoriesFragment.newInstance();
         }
     }
 }
