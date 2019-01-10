@@ -4,7 +4,18 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.RequestManager;
+import com.corroy.mathieu.mynews.Models.Article;
+import com.corroy.mathieu.mynews.Models.Multimedium;
 import com.corroy.mathieu.mynews.R;
+
+import java.lang.ref.WeakReference;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 

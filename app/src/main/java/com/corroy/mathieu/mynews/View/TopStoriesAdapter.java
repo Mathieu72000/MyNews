@@ -1,6 +1,7 @@
 package com.corroy.mathieu.mynews.View;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -31,6 +32,11 @@ public class TopStoriesAdapter extends RecyclerView.Adapter<TopStoriesViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull TopStoriesViewHolder viewHolder, int position) {
+        final Article mArticle = article.get(position);
+        viewHolder.title.setText(mArticle.getTitle());
+        viewHolder.section.setText(mArticle.getSection());
+        viewHolder.date.setText(mArticle.getPublishedDate());
+        viewHolder.image.setImageDrawable((Drawable) mArticle.getMultimedia());
     }
 
     @Override
