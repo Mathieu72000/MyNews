@@ -113,6 +113,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void configureToolbar() {
         this.toolbar = findViewById(R.id.activityMainToolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("My News");
     }
 
     // Configure DrawerLayout
