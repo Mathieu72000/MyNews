@@ -5,11 +5,11 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-
 import com.corroy.mathieu.mynews.Controllers.Utils.MyNewsStreams;
 import com.corroy.mathieu.mynews.Controllers.WebViewActivity;
 import com.corroy.mathieu.mynews.Models.Article;
@@ -91,18 +91,22 @@ public class TopStoriesFragment extends Fragment implements AdapterView.OnItemCl
 
     // RETROFIT
     private void executeHttpRequestWithRetrofit() {
-        this.disposable = MyNewsStreams.streamFetchTopStories("home").subscribeWith(new DisposableObserver<List<Article>>() {
+        String section = "home";
+        this.disposable = MyNewsStreams.streamFetchTopStories(section, "b8ce4364a4f24d9e8159ad992ca61a45").subscribeWith(new DisposableObserver<Article>(){
             @Override
-            public void onNext(List<Article> article) {
+            public void onNext(Article article) {
                 updateUI(article);
+                Log.e("TAG", "On Next");
             }
 
             @Override
             public void onError(Throwable e) {
+                Log.e("TAG", "On Error");
             }
 
             @Override
             public void onComplete() {
+                Log.e("TAG", "On Complete");
             }
         });
     }
@@ -111,9 +115,9 @@ public class TopStoriesFragment extends Fragment implements AdapterView.OnItemCl
         if (this.disposable != null && !this.disposable.isDisposed()) this.disposable.dispose();
     }
 
-    private void updateUI(List<Article> res){
+    private void updateUI(Article res){
         articleList.clear();
-        articleList.addAll(res);
+        articleList.add(res);
         adapter.notifyDataSetChanged();
     }
 }

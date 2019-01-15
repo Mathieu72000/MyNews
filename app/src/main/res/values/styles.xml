@@ -10,7 +10,6 @@
         <item name="windowNoTitle">true</item>
         <item name="colorControlNormal">#26C4EC</item>
         <item name="colorControlActivated">#26C4EC</item>
-        <item name="colorControlHighlight">#26C4EC</item>
     </style>
 
     <!-- Toolbar Theme -->

@@ -13,6 +13,7 @@ public class WebViewActivity extends AppCompatActivity {
     WebView webView;
     WebSettings webSettings;
 
+
     @SuppressLint("SetJavaScriptEnabled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
