@@ -1,6 +1,7 @@
 package com.corroy.mathieu.mynews.View;
 
 import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -10,9 +11,8 @@ import com.corroy.mathieu.mynews.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class TopStoriesViewHolder extends RecyclerView.ViewHolder {
+public class SearchViewHolder extends RecyclerView.ViewHolder {
 
-    // DESIGN
     @BindView(R.id.fragment_main_item_section)
     TextView section;
     @BindView(R.id.fragment_main_item_title)
@@ -22,16 +22,15 @@ public class TopStoriesViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.fragment_main_item_image)
     ImageView image;
 
-
-    public TopStoriesViewHolder(View itemView) {
+    public SearchViewHolder(@NonNull View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
     }
 
-    public void updateWithNews(Result nYTimesResult){
-        this.title.setText(nYTimesResult.getTitle());
-        this.date.setText(nYTimesResult.getPublishedDate());
-        this.section.setText(nYTimesResult.getSection());
-        this.image.setImageDrawable((Drawable) nYTimesResult.getMultimedia());
+    public void updateWithResult(Result searchResult){
+        this.section.setText(searchResult.getSection());
+        this.title.setText(searchResult.getTitle());
+        this.date.setText(searchResult.getPublishedDate());
+        this.image.setImageDrawable((Drawable) searchResult.getMultimedia());
     }
 }

@@ -50,7 +50,7 @@ public class Result {
     private List<Object> orgFacet = null;
     @SerializedName("per_facet")
     @Expose
-    private List<String> perFacet = null;
+    private List<Object> perFacet = null;
     @SerializedName("geo_facet")
     @Expose
     private List<Object> geoFacet = null;
@@ -170,11 +170,11 @@ public class Result {
         this.orgFacet = orgFacet;
     }
 
-    public List<String> getPerFacet() {
+    public List<Object> getPerFacet() {
         return perFacet;
     }
 
-    public void setPerFacet(List<String> perFacet) {
+    public void setPerFacet(List<Object> perFacet) {
         this.perFacet = perFacet;
     }
 
@@ -193,5 +193,4 @@ public class Result {
     public void setMultimedia(List<Multimedium> multimedia) {
         this.multimedia = multimedia;
     }
-
 }

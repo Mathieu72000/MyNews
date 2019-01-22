@@ -1,121 +1,76 @@
 package com.corroy.mathieu.mynews.Models;
 
+import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import java.util.List;
 
 public class Article {
 
-    @SerializedName("web_url")
+    @SerializedName("status")
     @Expose
-    private String webUrl;
-    @SerializedName("snippet")
+    private String status;
+    @SerializedName("copyright")
     @Expose
-    private String snippet;
-    @SerializedName("pub_date")
-    @Expose
-    private String pubDate;
-    @SerializedName("document_type")
-    @Expose
-    private String documentType;
-    @SerializedName("new_desk")
-    @Expose
-    private String newDesk;
-    @SerializedName("headline")
-    @Expose
-    private String typeOfMaterial;
-    @SerializedName("section_name")
-    @Expose
-    private String sectionName;
-    @SerializedName("uri")
-    @Expose
-    private String uri;
+    private String copyright;
     @SerializedName("section")
     @Expose
     private String section;
-    @SerializedName("subsection")
+    @SerializedName("last_updated")
     @Expose
-    private String subsection;
-    @SerializedName("title")
+    private String lastUpdated;
+    @SerializedName("num_results")
     @Expose
-    private String title;
-    @SerializedName("url")
+    private Integer numResults;
+    @SerializedName("results")
     @Expose
-    private String url;
-    @SerializedName("published_date")
-    @Expose
-    private String publishedDate;
-    @SerializedName("multimedia")
-    @Expose
-    private List<Multimedium> multimedia = null;
+    private List<Result> results = null;
 
-    @SerializedName("media")
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getCopyright() {
+        return copyright;
+    }
+
+    public void setCopyright(String copyright) {
+        this.copyright = copyright;
+    }
 
     public String getSection() {
         return section;
-    }
-
-    public String getSubsection() {
-        return subsection;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public String getPublishedDate() {
-        return publishedDate;
-    }
-
-    public List<Multimedium> getMultimedia() {
-        return multimedia;
     }
 
     public void setSection(String section) {
         this.section = section;
     }
 
-    public void setSubsection(String subsection) {
-        this.subsection = subsection;
+    public String getLastUpdated() {
+        return lastUpdated;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setLastUpdated(String lastUpdated) {
+        this.lastUpdated = lastUpdated;
     }
 
-    public void setPublishedDate(String publishedDate) {
-        this.publishedDate = publishedDate;
+    public Integer getNumResults() {
+        return numResults;
     }
 
-    public void setMultimedia(List<Multimedium> multimedia) {
-        this.multimedia = multimedia;
+    public void setNumResults(Integer numResults) {
+        this.numResults = numResults;
     }
 
-    public String getWebUrl() {
-        return webUrl;
+    public List<Result> getResults() {
+        return results;
     }
 
-    public String getPubDate() {
-        return pubDate;
+    public void setResults(List<Result> results) {
+        this.results = results;
     }
 
-    public String getNewDesk() {
-        return newDesk;
-    }
-
-    public String getSectionName() {
-        return sectionName;
-    }
-
-    public String getSnippet() {
-        return snippet;
-    }
 }

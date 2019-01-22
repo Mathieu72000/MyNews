@@ -93,5 +93,4 @@ public class Multimedium {
     public void setCopyright(String copyright) {
         this.copyright = copyright;
     }
-
 }

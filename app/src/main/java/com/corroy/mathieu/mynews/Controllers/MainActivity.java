@@ -1,5 +1,6 @@
 package com.corroy.mathieu.mynews.Controllers;
 
+import android.content.Intent;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
@@ -67,6 +68,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.about:
                 Toast.makeText(this, "Encoding about", Toast.LENGTH_SHORT).show();
                 break;
+            case R.id.search:
+                Intent intent = new Intent(this, SearchActivity.class);
+                startActivity(intent);
             default:
                 break;
         }
