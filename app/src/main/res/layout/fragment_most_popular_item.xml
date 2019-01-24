@@ -66,12 +66,4 @@
 
     </LinearLayout>
 
-    <View
-        android:id="@+id/separator1"
-        android:layout_width="fill_parent"
-        android:layout_height="1px"
-        android:layout_marginBottom="5dp"
-        android:layout_marginTop="10dp"
-        android:background="#90909090" />
-
 </LinearLayout>

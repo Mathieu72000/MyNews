@@ -3,6 +3,7 @@ package com.corroy.mathieu.mynews.Fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -10,11 +11,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+
+import com.bumptech.glide.Glide;
 import com.corroy.mathieu.mynews.Controllers.Utils.MyNewsStreams;
-import com.corroy.mathieu.mynews.Controllers.WebViewActivity;
+import com.corroy.mathieu.mynews.Controllers.Activities.WebViewActivity;
+import com.corroy.mathieu.mynews.Models.Article;
 import com.corroy.mathieu.mynews.Models.Result;
 import com.corroy.mathieu.mynews.R;
 import com.corroy.mathieu.mynews.View.TopStoriesAdapter;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import butterknife.BindView;
@@ -67,15 +73,16 @@ public class TopStoriesFragment extends Fragment implements AdapterView.OnItemCl
 
     // Configure RecyclerView Adapter, LayoutManager & glue it together
     private void configureRecyclerView() {
-        // 3.1 Reset List
+        // Reset List
         this.mResultList = new ArrayList<>();
-        // 3.2 Create adapter passing list of article
-        this.topStoriesAdapter = new TopStoriesAdapter(this.mResultList);
-        // 3.3 Attach the adapter to the recyclerView to populate item
+        // Create adapter passing list of article
+        this.topStoriesAdapter = new TopStoriesAdapter(this.mResultList, Glide.with(this));
+        // Attach the adapter to the recyclerView to populate item
         this.recyclerView.setAdapter(this.topStoriesAdapter);
-        // 3.4 Set layout manager to position the items
+        // Set layout manager to position the items
         this.recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
+        // Set a Divider
+        this.recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL));
     }
 
     @Override
@@ -91,10 +98,10 @@ public class TopStoriesFragment extends Fragment implements AdapterView.OnItemCl
     private void executeHttpRequestWithRetrofit() {
         String section = "home";
         this.disposable = MyNewsStreams.streamFetchTopStories(section, "pX69N3N5cVmjfynWXnSvWQ92GaxGuIAh")
-                .subscribeWith(new DisposableObserver<Result>(){
+                .subscribeWith(new DisposableObserver<Article>(){
             @Override
-            public void onNext(Result result) {
-                updateUI(result);
+            public void onNext(Article article) {
+                updateUI(article.getResults());
                 Log.e("TAG", "On Next");
             }
 
@@ -114,9 +121,9 @@ public class TopStoriesFragment extends Fragment implements AdapterView.OnItemCl
         if (this.disposable != null && !this.disposable.isDisposed()) this.disposable.dispose();
     }
 
-    private void updateUI(Result res){
+    private void updateUI(List<Result> news){
         mResultList.clear();
-        mResultList.add(res);
+        mResultList.addAll(news);
         topStoriesAdapter.notifyDataSetChanged();
     }
 }

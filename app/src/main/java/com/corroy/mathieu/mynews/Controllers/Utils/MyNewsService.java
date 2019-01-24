@@ -1,5 +1,6 @@
 package com.corroy.mathieu.mynews.Controllers.Utils;
 
+import com.corroy.mathieu.mynews.Models.Article;
 import com.corroy.mathieu.mynews.Models.Result;
 
 import io.reactivex.Observable;
@@ -18,8 +19,13 @@ public interface MyNewsService {
 
     // Create a GET request on a URL complement (EndPoints)
     @GET("svc/topstories/v2/{section}.json")
-    Observable<Result> getTopStoriesArticle(@Path("section") String section,
+    Observable<Article> getTopStoriesArticle(@Path("section") String section,
                                              @Query("api-key") String apiKey);
+
+    // MOST POPULAR
+    @GET("svc/mostpopular/v2/viewed/{period}.json")
+    Observable<Article> getMostPopularArticle(@Path("period") int period,
+                                              @Query("api-key") String apiKey2);
 
     // SEARCH
     @GET("svc/search/v2/articlesearch.json?api-key=pX69N3N5cVmjfynWXnSvWQ92GaxGuIAh&sort=newest")
@@ -31,7 +37,7 @@ public interface MyNewsService {
 
     // Configure a new Retrofit Client
     Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl("http://api.nytimes.com/") // URL racine
+            .baseUrl("https://api.nytimes.com/") // URL racine
             .addConverterFactory(GsonConverterFactory.create()) // Sérialiseur / Désérialiseur
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build();

@@ -1,8 +1,10 @@
 package com.corroy.mathieu.mynews.Controllers.Utils;
 
+import com.corroy.mathieu.mynews.Models.Article;
 import com.corroy.mathieu.mynews.Models.Result;
 import java.util.concurrent.TimeUnit;
 import io.reactivex.Observable;
+import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
@@ -12,9 +14,19 @@ public class MyNewsStreams {
 
     // TopStories Streams
 
-    public static Observable<Result> streamFetchTopStories(String section, String apiKey){
+    public static Observable<Article> streamFetchTopStories(String section, String apiKey){
         MyNewsService myNewsService = MyNewsService.retrofit.create(MyNewsService.class);
         return myNewsService.getTopStoriesArticle(section, apiKey)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .timeout(10, TimeUnit.SECONDS);
+    }
+
+    // MostPopular Streams
+
+    public static Observable<Article> streamFetchMostPopular(int period, String apiKey2){
+        MyNewsService myNewsService = MyNewsService.retrofit.create(MyNewsService.class);
+        return myNewsService.getMostPopularArticle(period, apiKey2)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .timeout(10, TimeUnit.SECONDS);

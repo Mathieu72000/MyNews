@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 
 import com.corroy.mathieu.mynews.Controllers.Utils.MyNewsStreams;
-import com.corroy.mathieu.mynews.Controllers.WebViewActivity;
+import com.corroy.mathieu.mynews.Controllers.Activities.WebViewActivity;
 import com.corroy.mathieu.mynews.Models.Result;
 import com.corroy.mathieu.mynews.R;
 import com.corroy.mathieu.mynews.View.SearchAdapter;

@@ -1,4 +1,4 @@
-package com.corroy.mathieu.mynews.Controllers;
+package com.corroy.mathieu.mynews.Controllers.Activities;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;

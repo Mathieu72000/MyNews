@@ -1,4 +1,4 @@
-package com.corroy.mathieu.mynews.Controllers;
+package com.corroy.mathieu.mynews.View;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -39,7 +39,7 @@ public class PagerAdapter extends FragmentPagerAdapter {
         case 0:
             return TopStoriesFragment.newInstance();
         case 1:
-            return MostPopularFragment.newInstance("Second Fragment");
+            return MostPopularFragment.newInstance();
         case 2:
             return PoliticsFragment.newInstance("Third Fragment");
         default:

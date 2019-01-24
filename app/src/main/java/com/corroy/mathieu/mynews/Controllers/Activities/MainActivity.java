@@ -1,5 +1,8 @@
-package com.corroy.mathieu.mynews.Controllers;
+package com.corroy.mathieu.mynews.Controllers.Activities;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -14,19 +17,43 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 import com.corroy.mathieu.mynews.R;
+import com.corroy.mathieu.mynews.View.PagerAdapter;
+
+import java.util.Calendar;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     // FOR DESIGN
-    private Toolbar toolbar;
-    private DrawerLayout drawerLayout;
-    private NavigationView navigationView;
-    private ViewPager viewPager;
+    @BindView(R.id.activityMainToolbar) Toolbar toolbar;
+    @BindView(R.id.activityMainDrawerLayout) DrawerLayout drawerLayout;
+    @BindView(R.id.activityMainNavigationView) NavigationView navigationView;
+    @BindView(R.id.activityViewPager) ViewPager viewPager;
+    @BindView(R.id.activityMainTabs) TabLayout tabLayout;
+    private AlarmManager mAlarmManager;
+    private PendingIntent mPendingIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
+
+        //---------------------------------------------------------------------------------------------
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.set(Calendar.HOUR_OF_DAY, 16);
+
+        mAlarmManager = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(getApplicationContext(), MyAlarm.class);
+        mPendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, intent, 0);
+
+        mAlarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis()
+                , AlarmManager.INTERVAL_DAY, mPendingIntent);
+
+        //---------------------------------------------------------------------------------------------
 
         this.configureToolbar();
 
@@ -34,14 +61,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         this.configureNavigationView();
 
-        // Find the ViewPager and configure it with the PagerAdapter
-        viewPager = findViewById(R.id.activityViewPager);
+        // Set the PagerAdapter and glue it with the ViewPager
         viewPager.setAdapter(new PagerAdapter(getSupportFragmentManager()));
 
-        // Find the TabLayout and configure it in the ViewPager to handle Tabs
-        TabLayout tabs = findViewById(R.id.activityMainTabs);
-        tabs.setupWithViewPager(viewPager);
-        tabs.setTabMode(TabLayout.MODE_FIXED);
+        // Glue the TabLayout and the ViewPager together
+        tabLayout.setupWithViewPager(viewPager);
+        tabLayout.setTabMode(TabLayout.MODE_FIXED);
     }
 
     @Override
@@ -115,14 +140,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     // Configure Toolbar
     private void configureToolbar() {
-        this.toolbar = findViewById(R.id.activityMainToolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("My News");
     }
 
     // Configure DrawerLayout
     private void configureDrawerLayout() {
-        this.drawerLayout = findViewById(R.id.activityMainDrawerLayout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
@@ -130,7 +153,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     // Configure NavigationView
     private void configureNavigationView(){
-       this.navigationView = findViewById(R.id.activityMainNavigationView);
        navigationView.setNavigationItemSelectedListener(this);
     }
 }

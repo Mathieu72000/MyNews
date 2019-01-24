@@ -1,4 +1,4 @@
-package com.corroy.mathieu.mynews.Controllers;
+package com.corroy.mathieu.mynews.Controllers.Activities;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
