@@ -32,6 +32,16 @@ public class MyNewsStreams {
                 .timeout(10, TimeUnit.SECONDS);
     }
 
+    // Politics Streams
+
+    public static Observable<Article> streamFetchPolitics(String section, String apiKey3){
+        MyNewsService myNewsService = MyNewsService.retrofit.create(MyNewsService.class);
+        return myNewsService.getPoliticsArticle(section, apiKey3)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .timeout(10, TimeUnit.SECONDS);
+    }
+
     // Search Streams
 
     public static Observable<Result> streamFetchSearch(String query, String start_date, String end_date, String section){

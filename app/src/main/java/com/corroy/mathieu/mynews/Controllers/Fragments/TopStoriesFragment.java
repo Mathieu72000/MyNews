@@ -1,8 +1,9 @@
-package com.corroy.mathieu.mynews.Fragments;
+package com.corroy.mathieu.mynews.Controllers.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.ListFragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,16 +12,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ListView;
 
 import com.bumptech.glide.Glide;
+import com.corroy.mathieu.mynews.Controllers.Utils.ItemClickSupport;
 import com.corroy.mathieu.mynews.Controllers.Utils.MyNewsStreams;
 import com.corroy.mathieu.mynews.Controllers.Activities.WebViewActivity;
 import com.corroy.mathieu.mynews.Models.Article;
 import com.corroy.mathieu.mynews.Models.Result;
 import com.corroy.mathieu.mynews.R;
 import com.corroy.mathieu.mynews.View.TopStoriesAdapter;
-
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import butterknife.BindView;
@@ -28,7 +29,7 @@ import butterknife.ButterKnife;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableObserver;
 
-public class TopStoriesFragment extends Fragment implements AdapterView.OnItemClickListener{
+public class TopStoriesFragment extends Fragment {
 
     // Declare the RecyclerView
     @BindView(R.id.topStoriesRecyclerView)
@@ -62,6 +63,8 @@ public class TopStoriesFragment extends Fragment implements AdapterView.OnItemCl
 
         this.executeHttpRequestWithRetrofit();
 
+        this.configureOnClickRecyclerView();
+
         return view;
     }
 
@@ -73,25 +76,23 @@ public class TopStoriesFragment extends Fragment implements AdapterView.OnItemCl
 
     // Configure RecyclerView Adapter, LayoutManager & glue it together
     private void configureRecyclerView() {
-        // Reset List
         this.mResultList = new ArrayList<>();
-        // Create adapter passing list of article
-        this.topStoriesAdapter = new TopStoriesAdapter(this.mResultList, Glide.with(this));
-        // Attach the adapter to the recyclerView to populate item
-        this.recyclerView.setAdapter(this.topStoriesAdapter);
-        // Set layout manager to position the items
-        this.recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        // Set a Divider
+        LinearLayoutManager manager = new LinearLayoutManager(getContext());
+        this.recyclerView.setLayoutManager(manager);
+        this.recyclerView.setHasFixedSize(true);
+        this.topStoriesAdapter = new TopStoriesAdapter(mResultList, Glide.with(this));
+        this.recyclerView.setAdapter(topStoriesAdapter);
         this.recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL));
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        // Declare list of article (Article) & Adapter
-        Result result = mResultList.get(position);
-        Intent intent = new Intent(getContext(), WebViewActivity.class);
-        intent.putExtra("Url", result.getUrl());
-        startActivity(intent);
+    private void configureOnClickRecyclerView(){
+        ItemClickSupport.addTo(recyclerView)
+                .setOnItemClickListener((recyclerView, position, v) -> {
+            Result result = mResultList.get(position);
+            Intent intent = new Intent(getContext(), WebViewActivity.class);
+            intent.putExtra("Url", result.getUrl());
+            startActivity(intent);
+        });
     }
 
     // RETROFIT

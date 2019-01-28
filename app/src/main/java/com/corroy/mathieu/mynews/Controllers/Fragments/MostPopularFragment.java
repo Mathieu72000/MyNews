@@ -1,8 +1,9 @@
-package com.corroy.mathieu.mynews.Fragments;
+package com.corroy.mathieu.mynews.Controllers.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import com.bumptech.glide.Glide;
 import com.corroy.mathieu.mynews.Controllers.Activities.WebViewActivity;
+import com.corroy.mathieu.mynews.Controllers.Utils.ItemClickSupport;
 import com.corroy.mathieu.mynews.Controllers.Utils.MyNewsStreams;
 import com.corroy.mathieu.mynews.Models.Article;
 import com.corroy.mathieu.mynews.Models.Result;
@@ -24,7 +26,7 @@ import butterknife.ButterKnife;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableObserver;
 
-public class MostPopularFragment extends Fragment implements AdapterView.OnItemClickListener{
+public class MostPopularFragment extends Fragment{
 
     // Declare the RecyclerView
     @BindView(R.id.mostPopularRecyclerView)
@@ -59,6 +61,8 @@ public class MostPopularFragment extends Fragment implements AdapterView.OnItemC
 
         this.executeHttpRequestWithRetrofit();
 
+        this.configureOnClickRecyclerView();
+
         return view;
     }
 
@@ -70,21 +74,22 @@ public class MostPopularFragment extends Fragment implements AdapterView.OnItemC
     private void configureRecyclerView(){
 
         this.mResultList = new ArrayList<>();
-
-        this.mostPopularAdapter = new TopStoriesAdapter(this.mResultList, Glide.with(this));
-
-        this.mRecyclerView.setAdapter(this.mostPopularAdapter);
-
-        this.mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        LinearLayoutManager manager = new LinearLayoutManager(getContext());
+        this.mRecyclerView.setLayoutManager(manager);
+        this.mRecyclerView.setHasFixedSize(true);
+        this.mostPopularAdapter = new TopStoriesAdapter(mResultList, Glide.with(this));
+        this.mRecyclerView.setAdapter(mostPopularAdapter);
+        this.mRecyclerView.addItemDecoration(new DividerItemDecoration(mRecyclerView.getContext(), DividerItemDecoration.VERTICAL));
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        // Declare list of article (Article) & Adapter
-        Result result = mResultList.get(position);
-        Intent intent = new Intent(getContext(), WebViewActivity.class);
-        intent.putExtra("Url", result.getUrl());
-        startActivity(intent);
+    private void configureOnClickRecyclerView(){
+        ItemClickSupport.addTo(mRecyclerView)
+                .setOnItemClickListener((recyclerView, position, v) -> {
+                    Result result = mResultList.get(position);
+                    Intent intent = new Intent(getContext(), WebViewActivity.class);
+                    intent.putExtra("Url", result.getUrl());
+                    startActivity(intent);
+                });
     }
 
     private void executeHttpRequestWithRetrofit(){

@@ -57,6 +57,11 @@ public class Result {
     @SerializedName("multimedia")
     @Expose
     private List<Multimedium> multimedia = null;
+    @Expose
+    private List<Medium> media = null;
+    @SerializedName("uri")
+    @Expose
+    private String uri;
 
     public String getSection() {
         return section;
@@ -192,5 +197,21 @@ public class Result {
 
     public void setMultimedia(List<Multimedium> multimedia) {
         this.multimedia = multimedia;
+    }
+
+    public List<Medium> getMedia() {
+        return media;
+    }
+
+    public void setMedia(List<Medium> media) {
+        this.media = media;
+    }
+
+    public String getUri() {
+        return uri;
+    }
+
+    public void setUri(String uri) {
+        this.uri = uri;
     }
 }

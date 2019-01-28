@@ -1,5 +1,6 @@
 package com.corroy.mathieu.mynews.View;
 
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -37,12 +38,11 @@ public class TopStoriesViewHolder extends RecyclerView.ViewHolder {
 
     public void updateWithNews(Result nYTimesResult, RequestManager glide){
         // ---------------- /SECTION/SUBSECTION/ --------------------------------
-        String mSection = nYTimesResult.getSection();
-        if(nYTimesResult.getSubsection() != null){
-            if(!nYTimesResult.getSubsection().isEmpty()){
-                mSection = mSection + " > " + nYTimesResult.getSubsection();
+        String mSection;
+        mSection = nYTimesResult.getSection();
+        if(nYTimesResult.getSubsection() != null && !nYTimesResult.getSubsection().isEmpty()){
+               mSection = mSection + " > " + nYTimesResult.getSubsection();
             }
-        }
         this.section.setText(mSection);
         // -------------------------- /DATE/ -----------------------------
         String parseDate = nYTimesResult.getPublishedDate();
@@ -59,11 +59,12 @@ public class TopStoriesViewHolder extends RecyclerView.ViewHolder {
         this.title.setText(nYTimesResult.getTitle());
 
         // --------------------------- /MEDIA/ ------------------------------
+        // TODO > Change drawable if no image available
         if (nYTimesResult.getMultimedia().size() > 0) {
             glide.load(nYTimesResult.getMultimedia().get(0).getUrl()).apply(new RequestOptions().fallback(R.drawable.ic_launcher_background)).into(image);
         } else {
-                    glide.clear(image);
-                    image.setImageResource(R.drawable.ic_launcher_background);
-                }
+            glide.clear(image);
+            image.setImageResource(R.drawable.ic_launcher_background);
+        }
             }
         }

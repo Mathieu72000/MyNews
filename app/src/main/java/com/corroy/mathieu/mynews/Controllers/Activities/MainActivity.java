@@ -85,7 +85,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
         switch (id){
             case R.id.notifications:
-                Toast.makeText(this, "Encoding notification", Toast.LENGTH_SHORT).show();
+                Intent intentNotification = new Intent(this, NotificationActivity.class);
+                startActivity(intentNotification);
                 break;
             case R.id.help:
                 Toast.makeText(this, "Encoding help", Toast.LENGTH_SHORT).show();
@@ -94,8 +95,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Toast.makeText(this, "Encoding about", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.search:
-                Intent intent = new Intent(this, SearchActivity.class);
-                startActivity(intent);
+                Intent intentSearch = new Intent(this, SearchActivity.class);
+                startActivity(intentSearch);
             default:
                 break;
         }

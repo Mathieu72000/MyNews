@@ -1,4 +1,4 @@
-package com.corroy.mathieu.mynews.Fragments;
+package com.corroy.mathieu.mynews.Controllers.Fragments;
 
 import android.app.ProgressDialog;
 import android.content.Intent;

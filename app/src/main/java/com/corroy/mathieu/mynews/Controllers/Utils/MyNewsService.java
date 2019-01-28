@@ -2,7 +2,6 @@ package com.corroy.mathieu.mynews.Controllers.Utils;
 
 import com.corroy.mathieu.mynews.Models.Article;
 import com.corroy.mathieu.mynews.Models.Result;
-
 import io.reactivex.Observable;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -26,6 +25,11 @@ public interface MyNewsService {
     @GET("svc/mostpopular/v2/viewed/{period}.json")
     Observable<Article> getMostPopularArticle(@Path("period") int period,
                                               @Query("api-key") String apiKey2);
+
+    // POLITICS
+    @GET("svc/topstories/v2/{section}.json")
+    Observable<Article> getPoliticsArticle(@Path("section") String section,
+                                           @Query("api-key") String apikey3);
 
     // SEARCH
     @GET("svc/search/v2/articlesearch.json?api-key=pX69N3N5cVmjfynWXnSvWQ92GaxGuIAh&sort=newest")

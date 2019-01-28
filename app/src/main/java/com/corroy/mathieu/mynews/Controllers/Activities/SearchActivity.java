@@ -33,6 +33,7 @@ public class SearchActivity extends AppCompatActivity {
     private CheckBox cbEntrepeneur;
     private CheckBox cbTravel;
     private CheckBox cbSports;
+    private String section = "type_of_material:News";
     private final List<CheckBox> checkBox = new ArrayList<>();
 
     @Override
@@ -93,6 +94,7 @@ public class SearchActivity extends AppCompatActivity {
             checkBox.clear();
             eDate = "";
             sDate = "";
+            section = "type_of_material:News";
 
             cbArt = findViewById(R.id.search__checkbox_arts);
             cbBusiness = findViewById(R.id.search_checkbox_business);
