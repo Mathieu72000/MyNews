@@ -10,7 +10,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import com.bumptech.glide.Glide;
 import com.corroy.mathieu.mynews.Controllers.Activities.WebViewActivity;
 import com.corroy.mathieu.mynews.Controllers.Utils.ItemClickSupport;
@@ -34,6 +33,7 @@ public class MostPopularFragment extends Fragment{
 
     // Declare Subscription
     private Disposable disposable;
+
 
     private List<Result> mResultList;
     private TopStoriesAdapter mostPopularAdapter;
@@ -104,6 +104,7 @@ public class MostPopularFragment extends Fragment{
 
             @Override
             public void onError(Throwable e) {
+                Log.e("REQUETE", e.getMessage()); //Test requete
                 Log.e("MOSTPOP", "Echec de la requête !");
             }
 

@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.RequestManager;
+import com.corroy.mathieu.mynews.Models.Doc;
 import com.corroy.mathieu.mynews.Models.Result;
 import com.corroy.mathieu.mynews.R;
 
@@ -14,10 +16,12 @@ import java.util.List;
 
 public class SearchAdapter extends RecyclerView.Adapter<SearchViewHolder> {
 
-    private List<Result> mResultList;
+    private List<Doc> mDocList;
+    private RequestManager glide;
 
-    public SearchAdapter(List<Result> mResultList){
-        this.mResultList = mResultList;
+    public SearchAdapter(List<Doc> mDocList, RequestManager glide){
+        this.mDocList = mDocList;
+        this.glide = glide;
     }
 
     @NonNull
@@ -25,21 +29,17 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchViewHolder> {
     public SearchViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context =  parent.getContext();
         LayoutInflater layoutInflater = LayoutInflater.from(context);
-        View view = layoutInflater.inflate(R.layout.fragment_search, parent, false);
+        View view = layoutInflater.inflate(R.layout.fragment_search_item, parent, false);
         return new SearchViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull SearchViewHolder searchViewHolder, int position) {
-        searchViewHolder.updateWithResult(this.mResultList.get(position));
+        searchViewHolder.updateWithResult(this.mDocList.get(position), this.glide);
     }
 
     @Override
     public int getItemCount() {
-        return this.mResultList.size();
-    }
-
-    public Result getResult(int position){
-        return this.mResultList.get(position);
+        return this.mDocList.size();
     }
 }

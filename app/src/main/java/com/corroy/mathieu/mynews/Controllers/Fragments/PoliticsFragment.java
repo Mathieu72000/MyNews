@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,8 +16,11 @@ import com.corroy.mathieu.mynews.Controllers.Activities.WebViewActivity;
 import com.corroy.mathieu.mynews.Controllers.Utils.ItemClickSupport;
 import com.corroy.mathieu.mynews.Controllers.Utils.MyNewsStreams;
 import com.corroy.mathieu.mynews.Models.Article;
+import com.corroy.mathieu.mynews.Models.Doc;
 import com.corroy.mathieu.mynews.Models.Result;
+import com.corroy.mathieu.mynews.Models.Search;
 import com.corroy.mathieu.mynews.R;
+import com.corroy.mathieu.mynews.View.SearchAdapter;
 import com.corroy.mathieu.mynews.View.TopStoriesAdapter;
 
 import java.util.ArrayList;
@@ -36,8 +40,8 @@ public class PoliticsFragment extends Fragment {
     private Disposable mDisposable;
 
     // Declare List
-    private List<Result> mResultList;
-    private TopStoriesAdapter politicsAdapter;
+    private List<Doc> mDocList;
+    private SearchAdapter politicsAdapter;
 
 
     public PoliticsFragment() {
@@ -74,11 +78,11 @@ public class PoliticsFragment extends Fragment {
     }
 
     private void configureRecyclerView() {
-        this.mResultList = new ArrayList<>();
+        this.mDocList = new ArrayList<>();
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         this.mRecyclerView.setLayoutManager(manager);
         this.mRecyclerView.setHasFixedSize(true);
-        this.politicsAdapter = new TopStoriesAdapter(mResultList, Glide.with(this));
+        this.politicsAdapter = new SearchAdapter(mDocList, Glide.with(this));
         this.mRecyclerView.setAdapter(politicsAdapter);
         this.mRecyclerView.addItemDecoration(new DividerItemDecoration(mRecyclerView.getContext(), DividerItemDecoration.VERTICAL));
     }
@@ -86,30 +90,30 @@ public class PoliticsFragment extends Fragment {
     private void configureOnClickRecyclerView(){
         ItemClickSupport.addTo(mRecyclerView)
                 .setOnItemClickListener((recyclerView, position, v) -> {
-                    Result result = mResultList.get(position);
+                    Doc doc = mDocList.get(position);
                     Intent intent = new Intent(getContext(), WebViewActivity.class);
-                    intent.putExtra("Url", result.getUrl());
+                    intent.putExtra("Url", doc.getWebUrl());
                     startActivity(intent);
                 });
     }
 
     private void executeHttpRequestWithRetrofit(){
-        String section = "politics";
-        this.mDisposable = MyNewsStreams.streamFetchPolitics(section, "pX69N3N5cVmjfynWXnSvWQ92GaxGuIAh")
-                .subscribeWith(new DisposableObserver<Article>() {
+        this.mDisposable = MyNewsStreams.streamFetchPolitics()
+                .subscribeWith(new DisposableObserver<Search>() {
                     @Override
-                    public void onNext(Article article) {
-                        updateUI(article.getResults());
+                    public void onNext(Search search) {
+                        updateUI(search.getResponse().getDocs());
+                        Log.e("POLITICS", "ON NEXT");
                     }
 
                     @Override
                     public void onError(Throwable e) {
-
+                        Log.e("POLITICS", e.getMessage());
                     }
 
                     @Override
                     public void onComplete() {
-
+                        Log.e("POLITICS", "On Complete");
                     }
                 });
     }
@@ -118,9 +122,9 @@ public class PoliticsFragment extends Fragment {
         if(this.mDisposable != null && !this.mDisposable.isDisposed()) this.mDisposable.dispose();
     }
 
-    private void updateUI(List<Result> res){
-        mResultList.clear();
-        mResultList.addAll(res);
+    private void updateUI(List<Doc> res){
+        mDocList.clear();
+        mDocList.addAll(res);
         politicsAdapter.notifyDataSetChanged();
     }
 }

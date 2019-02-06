@@ -6,6 +6,9 @@ import com.google.gson.annotations.SerializedName;
 
 public class Result {
 
+    @SerializedName("web_url")
+    @Expose
+    private String webUrl;
     @SerializedName("section")
     @Expose
     private String section;
@@ -45,15 +48,6 @@ public class Result {
     @SerializedName("des_facet")
     @Expose
     private List<String> desFacet = null;
-    @SerializedName("org_facet")
-    @Expose
-    private List<Object> orgFacet = null;
-    @SerializedName("per_facet")
-    @Expose
-    private List<Object> perFacet = null;
-    @SerializedName("geo_facet")
-    @Expose
-    private List<Object> geoFacet = null;
     @SerializedName("multimedia")
     @Expose
     private List<Multimedium> multimedia = null;
@@ -63,101 +57,109 @@ public class Result {
     @Expose
     private String uri;
 
-    public String getSection() {
-        return section;
-    }
+        public String getSection () {
+            return section;
+        }
 
-    public void setSection(String section) {
-        this.section = section;
-    }
+        public void setSection (String section){
+            this.section = section;
+        }
 
-    public String getSubsection() {
-        return subsection;
-    }
+        public String getSubsection () {
+            return subsection;
+        }
 
-    public void setSubsection(String subsection) {
-        this.subsection = subsection;
-    }
+        public void setSubsection (String subsection){
+            this.subsection = subsection;
+        }
 
-    public String getTitle() {
-        return title;
-    }
+        public String getTitle () {
+            return title;
+        }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+        public void setTitle (String title){
+            this.title = title;
+        }
 
-    public String getAbstract() {
-        return _abstract;
-    }
+        public String getAbstract () {
+            return _abstract;
+        }
 
-    public void setAbstract(String _abstract) {
-        this._abstract = _abstract;
-    }
+        public void setAbstract (String _abstract){
+            this._abstract = _abstract;
+        }
 
-    public String getUrl() {
-        return url;
-    }
+        public String getUrl () {
+            return url;
+        }
 
-    public void setUrl(String url) {
-        this.url = url;
-    }
+        public void setUrl (String url){
+            this.url = url;
+        }
 
-    public String getByline() {
-        return byline;
-    }
+        public String getByline () {
+            return byline;
+        }
 
-    public void setByline(String byline) {
-        this.byline = byline;
-    }
+        public void setByline (String byline){
+            this.byline = byline;
+        }
 
-    public String getItemType() {
-        return itemType;
-    }
+        public String getItemType () {
+            return itemType;
+        }
 
-    public void setItemType(String itemType) {
-        this.itemType = itemType;
-    }
+        public void setItemType (String itemType){
+            this.itemType = itemType;
+        }
 
-    public String getUpdatedDate() {
-        return updatedDate;
-    }
+        public String getUpdatedDate () {
+            return updatedDate;
+        }
 
-    public void setUpdatedDate(String updatedDate) {
-        this.updatedDate = updatedDate;
-    }
+        public void setUpdatedDate (String updatedDate){
+            this.updatedDate = updatedDate;
+        }
 
-    public String getCreatedDate() {
-        return createdDate;
-    }
+        public String getCreatedDate () {
+            return createdDate;
+        }
 
-    public void setCreatedDate(String createdDate) {
-        this.createdDate = createdDate;
-    }
+        public void setCreatedDate (String createdDate){
+            this.createdDate = createdDate;
+        }
 
-    public String getPublishedDate() {
-        return publishedDate;
-    }
+        public String getPublishedDate () {
+            return publishedDate;
+        }
 
-    public void setPublishedDate(String publishedDate) {
-        this.publishedDate = publishedDate;
-    }
+        public void setPublishedDate (String publishedDate){
+            this.publishedDate = publishedDate;
+        }
 
-    public String getMaterialTypeFacet() {
-        return materialTypeFacet;
-    }
+        public String getMaterialTypeFacet () {
+            return materialTypeFacet;
+        }
 
-    public void setMaterialTypeFacet(String materialTypeFacet) {
-        this.materialTypeFacet = materialTypeFacet;
-    }
+        public void setMaterialTypeFacet (String materialTypeFacet){
+            this.materialTypeFacet = materialTypeFacet;
+        }
 
-    public String getKicker() {
-        return kicker;
-    }
+        public String getKicker () {
+            return kicker;
+        }
 
-    public void setKicker(String kicker) {
-        this.kicker = kicker;
-    }
+        public void setKicker (String kicker){
+            this.kicker = kicker;
+        }
+
+        public List<Multimedium> getMultimedia () {
+            return multimedia;
+        }
+
+        public void setMultimedia (List < Multimedium > multimedia) {
+            this.multimedia = multimedia;
+        }
 
     public List<String> getDesFacet() {
         return desFacet;
@@ -165,38 +167,6 @@ public class Result {
 
     public void setDesFacet(List<String> desFacet) {
         this.desFacet = desFacet;
-    }
-
-    public List<Object> getOrgFacet() {
-        return orgFacet;
-    }
-
-    public void setOrgFacet(List<Object> orgFacet) {
-        this.orgFacet = orgFacet;
-    }
-
-    public List<Object> getPerFacet() {
-        return perFacet;
-    }
-
-    public void setPerFacet(List<Object> perFacet) {
-        this.perFacet = perFacet;
-    }
-
-    public List<Object> getGeoFacet() {
-        return geoFacet;
-    }
-
-    public void setGeoFacet(List<Object> geoFacet) {
-        this.geoFacet = geoFacet;
-    }
-
-    public List<Multimedium> getMultimedia() {
-        return multimedia;
-    }
-
-    public void setMultimedia(List<Multimedium> multimedia) {
-        this.multimedia = multimedia;
     }
 
     public List<Medium> getMedia() {
@@ -214,4 +184,12 @@ public class Result {
     public void setUri(String uri) {
         this.uri = uri;
     }
-}
+
+        public String getWebUrl () {
+            return webUrl;
+        }
+
+        public void setWebUrl (String webUrl){
+            this.webUrl = webUrl;
+        }
+    }

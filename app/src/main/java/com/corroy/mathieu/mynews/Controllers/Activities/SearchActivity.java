@@ -12,9 +12,13 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 import com.corroy.mathieu.mynews.R;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -24,6 +28,7 @@ public class SearchActivity extends AppCompatActivity {
     private EditText endDate;
     private DatePickerDialog.OnDateSetListener mDateListener;
     private DatePickerDialog.OnDateSetListener mDateListener2;
+    private Date date;
     private String sDate = "";
     private String eDate = "";
     private TextInputEditText searchTerm;
@@ -110,10 +115,57 @@ public class SearchActivity extends AppCompatActivity {
             checkBox.add(cbSports);
             checkBox.add(cbTravel);
 
-            Intent intent = new Intent(v.getContext(), SearchActivity.class);
-            intent.putExtra("start_date", sDate);
-            intent.putExtra("end_date", eDate);
-            v.getContext().startActivity(intent);
+            String inputPattern = "dd/MM/yyyy";
+            String outputPattern = "yyyyMMdd";
+            SimpleDateFormat inputFormat = new SimpleDateFormat(inputPattern);
+            SimpleDateFormat outputFormat = new SimpleDateFormat(outputPattern);
+
+            searchTerm = findViewById(R.id.search_term);
+
+            int count = 0;
+
+            for(int i = 0; i < checkBox.size(); i++) {
+                if (checkBox.get(i).isChecked()) {
+                    if (count == 0) {
+                       section = section + " AND news_desk:(" + checkBox.get(i).getText().toString();
+                       count++;
+                    }
+                    else if (count > 0){
+                        section = section + " OR " + checkBox.get(i).getText().toString();
+                        count++;
+                    }
+                }
+            }
+
+            if(count > 0) section = section + ")";
+
+            if (count == 0){
+                Toast.makeText(getApplicationContext(), "Please specify at least one category to search", Toast.LENGTH_LONG).show();
+            }
+            else if (searchTerm.getText().toString().isEmpty()) {
+                Toast.makeText(getApplicationContext(), "Please select at least one keyword to search", Toast.LENGTH_LONG).show();
+            } else {
+                try {
+                    date = inputFormat.parse(startDate.getText().toString());
+                    sDate = outputFormat.format(date);
+                } catch (ParseException e){
+                    e.printStackTrace();
+                }
+
+                try {
+                    date = inputFormat.parse(endDate.getText().toString());
+                    eDate = outputFormat.format(date);
+                } catch (ParseException e){
+                    e.printStackTrace();
+                }
+
+                    Intent intent = new Intent(v.getContext(), SearchResult.class);
+                    intent.putExtra("query", searchTerm.getText().toString());
+                    intent.putExtra("start_date", sDate);
+                    intent.putExtra("end_date", eDate);
+                    intent.putExtra("section", section);
+                    v.getContext().startActivity(intent);
+                }
         });
     }
 

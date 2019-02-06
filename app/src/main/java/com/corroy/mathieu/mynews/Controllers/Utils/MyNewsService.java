@@ -1,7 +1,9 @@
 package com.corroy.mathieu.mynews.Controllers.Utils;
 
 import com.corroy.mathieu.mynews.Models.Article;
-import com.corroy.mathieu.mynews.Models.Result;
+import com.corroy.mathieu.mynews.Models.Doc;
+import com.corroy.mathieu.mynews.Models.Search;
+
 import io.reactivex.Observable;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -10,7 +12,6 @@ import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
-// Top Stories API
 
 public interface MyNewsService {
 
@@ -27,17 +28,16 @@ public interface MyNewsService {
                                               @Query("api-key") String apiKey2);
 
     // POLITICS
-    @GET("svc/topstories/v2/{section}.json")
-    Observable<Article> getPoliticsArticle(@Path("section") String section,
-                                           @Query("api-key") String apikey3);
+    @GET("svc/search/v2/articlesearch.json?api-key=pX69N3N5cVmjfynWXnSvWQ92GaxGuIAh&fq=news_desk:\"Politics\"&sort=newest")
+    Observable<Search> getPoliticsArticle();
 
     // SEARCH
     @GET("svc/search/v2/articlesearch.json?api-key=pX69N3N5cVmjfynWXnSvWQ92GaxGuIAh&sort=newest")
-    Observable<Result> getSearch(
+    Observable<Search> getSearch(
             @Query("q") String query,
             @Query("begin_date") String b_date,
             @Query("end_date") String e_date,
-            @Query("fq") String section2);
+            @Query("fq") String section);
 
     // Configure a new Retrofit Client
     Retrofit retrofit = new Retrofit.Builder()

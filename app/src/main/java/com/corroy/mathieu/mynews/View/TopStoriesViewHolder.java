@@ -1,19 +1,19 @@
 package com.corroy.mathieu.mynews.View;
 
-import android.graphics.drawable.Drawable;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.request.RequestOptions;
+import com.corroy.mathieu.mynews.Models.Multimedium;
 import com.corroy.mathieu.mynews.Models.Result;
 import com.corroy.mathieu.mynews.R;
-
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -59,12 +59,6 @@ public class TopStoriesViewHolder extends RecyclerView.ViewHolder {
         this.title.setText(nYTimesResult.getTitle());
 
         // --------------------------- /MEDIA/ ------------------------------
-        // TODO > Change drawable if no image available
-        if (nYTimesResult.getMultimedia().size() > 0) {
-            glide.load(nYTimesResult.getMultimedia().get(0).getUrl()).apply(new RequestOptions().fallback(R.drawable.ic_launcher_background)).into(image);
-        } else {
-            glide.clear(image);
-            image.setImageResource(R.drawable.ic_launcher_background);
+
         }
-            }
         }
