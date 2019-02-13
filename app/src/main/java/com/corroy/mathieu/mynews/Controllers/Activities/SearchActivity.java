@@ -67,9 +67,17 @@ public class SearchActivity extends AppCompatActivity {
             dialog.show();
         });
         mDateListener = (view, year, month, dayOfMonth) -> {
+            String selectedDay = String.valueOf(dayOfMonth);
+            String selectedMonth = String.valueOf(month);
             month++;
-            Log.d("Listener", "onDateListener: date" + year + "/" + month + "/" + dayOfMonth);
-            String date = month + "/" + dayOfMonth + "/" + year;
+            Log.d("Listener", "onDateListener: date" + year + "/" + month + "/" + "0" +dayOfMonth);
+            if(month < 10){
+                selectedMonth = "0" + month;
+            }
+            if (dayOfMonth < 10) {
+                selectedDay = "0" + dayOfMonth;
+            }
+            String date = selectedMonth + "/" + selectedDay + "/" + year;
             startDate.setText(date);
         };
 
@@ -88,10 +96,18 @@ public class SearchActivity extends AppCompatActivity {
             dialog.show();
         });
         mDateListener2 = (view, year, month, dayOfMonth) -> {
+            String selectedDay = String.valueOf(dayOfMonth);
+            String selectedMonth = String.valueOf(month);
             month++;
             Log.d("Listener", "onDateListener: date" + year + "/" + month + "/" + dayOfMonth);
-            String date = month + "/" + dayOfMonth + "/" + dayOfMonth;
-            endDate.setText(date);
+            if(month < 10){
+                selectedMonth = "0" + month;
+            }
+            if (dayOfMonth < 10) {
+                selectedDay = "0" + dayOfMonth;
+            }
+                String date = selectedMonth + "/" + selectedDay + "/" + year;
+                endDate.setText(date);
         };
 
         Button searchButton = findViewById(R.id.search_button);
@@ -120,7 +136,7 @@ public class SearchActivity extends AppCompatActivity {
             SimpleDateFormat inputFormat = new SimpleDateFormat(inputPattern);
             SimpleDateFormat outputFormat = new SimpleDateFormat(outputPattern);
 
-            searchTerm = findViewById(R.id.search_term);
+            searchTerm = findViewById(R.id.search_query_term);
 
             int count = 0;
 

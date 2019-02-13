@@ -45,19 +45,17 @@ public class Result {
     @SerializedName("kicker")
     @Expose
     private String kicker;
-    @SerializedName("des_facet")
-    @Expose
-    private List<String> desFacet = null;
     @SerializedName("multimedia")
     @Expose
     private List<Multimedium> multimedia = null;
+    @SerializedName("media")
     @Expose
     private List<Medium> media = null;
     @SerializedName("uri")
     @Expose
     private String uri;
 
-        public String getSection () {
+    public String getSection () {
             return section;
         }
 
@@ -161,27 +159,19 @@ public class Result {
             this.multimedia = multimedia;
         }
 
-    public List<String> getDesFacet() {
-        return desFacet;
-    }
-
-    public void setDesFacet(List<String> desFacet) {
-        this.desFacet = desFacet;
-    }
-
-    public List<Medium> getMedia() {
+        public List<Medium> getMedia() {
         return media;
     }
 
-    public void setMedia(List<Medium> media) {
+        public void setMedia(List<Medium> media) {
         this.media = media;
     }
 
-    public String getUri() {
+        public String getUri() {
         return uri;
     }
 
-    public void setUri(String uri) {
+        public void setUri(String uri) {
         this.uri = uri;
     }
 

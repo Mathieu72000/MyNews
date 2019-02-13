@@ -5,12 +5,18 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
+import com.bumptech.glide.request.RequestOptions;
 import com.corroy.mathieu.mynews.Models.Doc;
+import com.corroy.mathieu.mynews.Models.Multimedium;
 import com.corroy.mathieu.mynews.R;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -56,6 +62,18 @@ public class SearchViewHolder extends RecyclerView.ViewHolder {
         this.titleSearch.setText(doc.getSnippet());
 
         // --------------------------- /MEDIA/ ------------------------------
+        List<Multimedium> multimediumList;
+        multimediumList = doc.getMultimedia();
+        if(multimediumList.isEmpty()){
+            this.imageSearch.setImageResource(R.drawable.newyorktimesicon);
+        } else {
+            for (int i = 0; i < multimediumList.size(); i++){
+                if(multimediumList.get(i).getSubtype().equals("thumbnail")){
+                    String url = "https://static01.nyt.com/" + multimediumList.get(i).getUrl();
+                    glide.load(url).into(this.imageSearch);
+                }
+            }
         }
         }
+    }
 

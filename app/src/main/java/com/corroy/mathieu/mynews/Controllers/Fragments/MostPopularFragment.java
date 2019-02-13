@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestManager;
 import com.corroy.mathieu.mynews.Controllers.Activities.WebViewActivity;
 import com.corroy.mathieu.mynews.Controllers.Utils.ItemClickSupport;
 import com.corroy.mathieu.mynews.Controllers.Utils.MyNewsStreams;

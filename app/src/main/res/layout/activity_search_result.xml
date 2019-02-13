@@ -6,6 +6,31 @@
     android:orientation="vertical"
     tools:context=".Controllers.Activities.SearchResult">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#26C4EC">
+
+        <ImageButton
+            android:id="@+id/back_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/leftarrow"
+            android:background="#26C4EC"
+            android:layout_margin="17dp"/>
+
+        <TextView
+            android:id="@+id/search_article_notification_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:layout_margin="15dp"
+            android:textColor="@color/white"
+            android:text="Search Articles"/>
+
+    </LinearLayout>
+
+
 
     <FrameLayout
         android:id="@+id/activity_search_frame_layout"

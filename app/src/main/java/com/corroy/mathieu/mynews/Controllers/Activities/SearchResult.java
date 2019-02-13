@@ -3,6 +3,7 @@ package com.corroy.mathieu.mynews.Controllers.Activities;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.ImageButton;
 
 import com.corroy.mathieu.mynews.Controllers.Fragments.SearchFragment;
 import com.corroy.mathieu.mynews.R;
@@ -10,11 +11,15 @@ import com.corroy.mathieu.mynews.R;
 public class SearchResult extends AppCompatActivity {
 
     private SearchFragment searchFragment = (SearchFragment) getSupportFragmentManager().findFragmentById(R.id.activity_search_frame_layout);
+    private ImageButton backArrow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_result);
+
+        backArrow = findViewById(R.id.back_arrow);
+        backArrow.setOnClickListener(v -> startActivity());
 
         Intent intent = getIntent();
         String sDate = intent.getStringExtra("start_date");
@@ -41,6 +46,11 @@ public class SearchResult extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.activity_search_frame_layout, searchFragment)
                     .commit();
+         }
+        }
+
+        private void startActivity(){
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(intent);
         }
     }
-}

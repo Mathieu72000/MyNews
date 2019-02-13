@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -11,14 +12,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
 import com.bumptech.glide.Glide;
 import com.corroy.mathieu.mynews.Controllers.Utils.ItemClickSupport;
 import com.corroy.mathieu.mynews.Controllers.Utils.MyNewsStreams;
 import com.corroy.mathieu.mynews.Controllers.Activities.WebViewActivity;
 import com.corroy.mathieu.mynews.Models.Doc;
-import com.corroy.mathieu.mynews.Models.Response;
-import com.corroy.mathieu.mynews.Models.Result;
 import com.corroy.mathieu.mynews.Models.Search;
 import com.corroy.mathieu.mynews.R;
 import com.corroy.mathieu.mynews.View.SearchAdapter;
@@ -81,6 +79,7 @@ public class SearchFragment extends Fragment {
         disposeWhenDestroy();
     }
 
+
     private void configureOnClickRecyclerView(){
         ItemClickSupport.addTo(recyclerView)
                 .setOnItemClickListener((recyclerView, position, v) -> {
@@ -92,21 +91,17 @@ public class SearchFragment extends Fragment {
     }
 
     private void configureRecyclerView() {
-        // 3.1 Reset List
         this.mDocList = new ArrayList<>();
-        // 3.2 Create adapter passing list of article
-        this.searchAdapter = new SearchAdapter(this.mDocList, Glide.with(this));
-        // 3.3 Attach the adapter to the recyclerView to populate item
-        this.recyclerView.setAdapter(this.searchAdapter);
-        // 3.4 Set layout manager to position the items
-        this.recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        LinearLayoutManager manager = new LinearLayoutManager(getContext());
+        this.recyclerView.setLayoutManager(manager);
+        this.recyclerView.setHasFixedSize(true);
+        this.searchAdapter = new SearchAdapter(mDocList, Glide.with(this));
+        this.recyclerView.setAdapter(searchAdapter);
+        this.recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL));
     }
 
     private void executeHttpRequestWithRetrofit(){
-        ProgressDialog mProgressDialog = new ProgressDialog(getActivity());
-        mProgressDialog.setIndeterminate(false);
-        mProgressDialog.setMessage("Loading...");
-        mProgressDialog.show();
+        showProgressDialog();
         this.disposable = MyNewsStreams.streamFetchSearch(query, start_date, end_date, section)
                 .subscribeWith(new DisposableObserver<Search>() {
             @Override
@@ -115,6 +110,7 @@ public class SearchFragment extends Fragment {
                     Toast.makeText(getActivity(), "This search does not return any results", Toast.LENGTH_LONG).show();
                 } else {
                     updateUISearch(value.getResponse().getDocs());
+                    dismissProgressDialog();
                 }
                 Log.e("SEARCH", "ON NEXT");
             }
@@ -142,4 +138,22 @@ public class SearchFragment extends Fragment {
         }
         searchAdapter.notifyDataSetChanged();
     }
-}
+
+    private ProgressDialog mProgressDialog;
+
+    public void showProgressDialog(){
+        if(mProgressDialog == null){
+            mProgressDialog = new ProgressDialog(getActivity());
+            mProgressDialog.setIndeterminate(true);
+            mProgressDialog.setCancelable(true);
+        }
+        mProgressDialog.setMessage("Wait a moment...");
+        mProgressDialog.show();
+    }
+
+    public void dismissProgressDialog(){
+        if(mProgressDialog != null){
+            mProgressDialog.dismiss();
+            }
+        }
+    }

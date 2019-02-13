@@ -3,13 +3,9 @@ package com.corroy.mathieu.mynews.Controllers.Activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.Switch;
-import android.widget.TextView;
-
 import com.corroy.mathieu.mynews.R;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -31,7 +27,6 @@ public class NotificationActivity extends AppCompatActivity {
 
             } else {
                 mSwitch.setChecked(false);
-
             }
         });
         }
