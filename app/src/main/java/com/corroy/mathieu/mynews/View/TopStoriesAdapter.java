@@ -18,11 +18,9 @@ public class TopStoriesAdapter extends RecyclerView.Adapter<TopStoriesViewHolder
 
     // FOR DATA
     private List<Result> mResultList;
-    private RequestManager glide;
 
-    public TopStoriesAdapter(List<Result> mResultList, RequestManager glide){
+    public TopStoriesAdapter(List<Result> mResultList){
         this.mResultList = mResultList;
-        this.glide = glide;
     }
 
     @Override
@@ -35,7 +33,7 @@ public class TopStoriesAdapter extends RecyclerView.Adapter<TopStoriesViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull TopStoriesViewHolder viewHolder, int position) {
-        viewHolder.updateWithNews(this.mResultList.get(position), this.glide);
+        viewHolder.updateWithNews(this.mResultList.get(position));
             }
 
     @Override

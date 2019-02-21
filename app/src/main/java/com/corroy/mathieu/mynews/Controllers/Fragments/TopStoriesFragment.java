@@ -81,7 +81,7 @@ public class TopStoriesFragment extends Fragment {
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         this.recyclerView.setLayoutManager(manager);
         this.recyclerView.setHasFixedSize(true);
-        this.topStoriesAdapter = new TopStoriesAdapter(mResultList, Glide.with(this));
+        this.topStoriesAdapter = new TopStoriesAdapter(mResultList);
         this.recyclerView.setAdapter(topStoriesAdapter);
         this.recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL));
     }

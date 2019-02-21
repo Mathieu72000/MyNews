@@ -1,6 +1,7 @@
 package com.corroy.mathieu.mynews.View;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -37,7 +38,7 @@ public class TopStoriesViewHolder extends RecyclerView.ViewHolder {
         ButterKnife.bind(this, itemView);
     }
 
-    public void updateWithNews(Result nYTimesResult, RequestManager glide) {
+    public void updateWithNews(Result nYTimesResult) {
         // ---------------- /SECTION/SUBSECTION/ --------------------------------
         String mSection;
         mSection = nYTimesResult.getSection();
@@ -60,30 +61,19 @@ public class TopStoriesViewHolder extends RecyclerView.ViewHolder {
         this.title.setText(nYTimesResult.getTitle());
 
         // --------------------------- /MEDIA/ ------------------------------
-        List<Multimedium> multimediumList;
-        multimediumList = nYTimesResult.getMultimedia();
-        if (multimediumList != null && !multimediumList.isEmpty()) {
-            Glide.with(this.itemView.getContext())
-                    .load(multimediumList.get(0).getUrl())
-                    .into(this.image);
-        } else if (multimediumList != null){
-            Glide.with(this.itemView.getContext())
-                    .load(nYTimesResult.getMedia())
-                    .into(this.image);
-        }
 //        List<Multimedium> multimediumList;
-//        if (nYTimesResult.getMedia() == null) {
-//            multimediumList = nYTimesResult.getMultimedia();
-//        } else {
-//            multimediumList = nYTimesResult.getMedia().get(0).getMultimedia();
+//        multimediumList = nYTimesResult.getMultimedia();
+//        if (multimediumList != null && !multimediumList.isEmpty()) {
+//            Glide.with(this.itemView.getContext())
+//                    .load(multimediumList.get(0).getUrl())
+//                    .into(this.image);
 //        }
-//        if (multimediumList.isEmpty()) {
-//            this.image.setImageResource(R.drawable.newyorktimesicon);
-//        } else {
-//            for (int i = 0; i < multimediumList.size(); i++) {
-//                glide.load(multimediumList.get(i).getUrl()).into(this.image);
+//        Log.e("BUG", nYTimesResult.getMedia().toString());
+//        Log.e("BUG", nYTimesResult.getMedia().get(0).getMediaMetadata().get(0).toString());
+//        if (nYTimesResult != null && !nYTimesResult.getMedia().get(0).getMediaMetadata().get(0).getUrl().isEmpty()){
+//            Glide.with(this.itemView.getContext())
+//                    .load(nYTimesResult.getMedia().get(0).getMediaMetadata().get(0).getUrl())
+//                    .into(this.image);
 //            }
-//
-//        }
         }
     }

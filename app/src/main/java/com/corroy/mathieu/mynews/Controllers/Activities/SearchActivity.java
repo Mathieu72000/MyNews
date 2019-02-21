@@ -1,7 +1,9 @@
 package com.corroy.mathieu.mynews.Controllers.Activities;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.design.widget.TextInputEditText;
@@ -12,6 +14,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 import com.corroy.mathieu.mynews.R;
 import java.text.ParseException;
@@ -28,10 +31,10 @@ public class SearchActivity extends AppCompatActivity {
     private EditText endDate;
     private DatePickerDialog.OnDateSetListener mDateListener;
     private DatePickerDialog.OnDateSetListener mDateListener2;
+    private TextInputEditText searchTerm;
     private Date date;
     private String sDate = "";
     private String eDate = "";
-    private TextInputEditText searchTerm;
     private CheckBox cbArt;
     private CheckBox cbBusiness;
     private CheckBox cbPolitics;
@@ -158,7 +161,7 @@ public class SearchActivity extends AppCompatActivity {
             if (count == 0){
                 Toast.makeText(getApplicationContext(), "Please specify at least one category to search", Toast.LENGTH_LONG).show();
             }
-            else if (searchTerm.getText().toString().isEmpty()) {
+            else if (searchTerm.getText().toString().isEmpty()){
                 Toast.makeText(getApplicationContext(), "Please select at least one keyword to search", Toast.LENGTH_LONG).show();
             } else {
                 try {

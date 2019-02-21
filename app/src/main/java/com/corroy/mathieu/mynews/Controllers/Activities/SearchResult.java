@@ -46,7 +46,7 @@ public class SearchResult extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.activity_search_frame_layout, searchFragment)
                     .commit();
-         }
+            }
         }
 
         private void startActivity(){

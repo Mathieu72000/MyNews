@@ -78,7 +78,7 @@ public class MostPopularFragment extends Fragment{
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         this.mRecyclerView.setLayoutManager(manager);
         this.mRecyclerView.setHasFixedSize(true);
-        this.mostPopularAdapter = new TopStoriesAdapter(mResultList, Glide.with(this));
+        this.mostPopularAdapter = new TopStoriesAdapter(mResultList);
         this.mRecyclerView.setAdapter(mostPopularAdapter);
         this.mRecyclerView.addItemDecoration(new DividerItemDecoration(mRecyclerView.getContext(), DividerItemDecoration.VERTICAL));
     }

@@ -72,8 +72,7 @@ public class SearchViewHolder extends RecyclerView.ViewHolder {
                     String url = "https://static01.nyt.com/" + multimediumList.get(i).getUrl();
                     glide.load(url).into(this.imageSearch);
                 }
-            }
-        }
-        }
+             }
+         }
     }
-
+}

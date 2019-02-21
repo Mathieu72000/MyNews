@@ -32,28 +32,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @BindView(R.id.activityMainNavigationView) NavigationView navigationView;
     @BindView(R.id.activityViewPager) ViewPager viewPager;
     @BindView(R.id.activityMainTabs) TabLayout tabLayout;
-    private AlarmManager mAlarmManager;
-    private PendingIntent mPendingIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-
-        //---------------------------------------------------------------------------------------------
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.set(Calendar.HOUR_OF_DAY, 16);
-
-        mAlarmManager = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(getApplicationContext(), MyAlarm.class);
-        mPendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, intent, 0);
-
-        mAlarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis()
-                , AlarmManager.INTERVAL_DAY, mPendingIntent);
-
-        //---------------------------------------------------------------------------------------------
 
         this.configureToolbar();
 
