@@ -112,12 +112,10 @@ public class SearchFragment extends Fragment {
                     updateUISearch(value.getResponse().getDocs());
                     dismissProgressDialog();
                 }
-                Log.e("SEARCH", "ON NEXT");
             }
 
             @Override
             public void onError(Throwable e) {
-                Log.e("SEARCH", e.getMessage());
             }
 
             @Override

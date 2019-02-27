@@ -100,13 +100,10 @@ public class MostPopularFragment extends Fragment{
             @Override
             public void onNext(Article article) {
                 updateUI(article.getResults());
-                Log.e("MOSTPOP", "Requête effectué !");
             }
 
             @Override
             public void onError(Throwable e) {
-                Log.e("REQUETE", e.getMessage()); //Test requete
-                Log.e("MOSTPOP", "Echec de la requête !");
             }
 
             @Override

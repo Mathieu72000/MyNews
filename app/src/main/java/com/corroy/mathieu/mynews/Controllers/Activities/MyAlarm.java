@@ -1,55 +1,52 @@
 package com.corroy.mathieu.mynews.Controllers.Activities;
 
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
+import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import com.corroy.mathieu.mynews.Controllers.Utils.MyNewsStreams;
 import com.corroy.mathieu.mynews.Models.Search;
 import com.corroy.mathieu.mynews.R;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.ListIterator;
 
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableObserver;
 
 public class MyAlarm extends BroadcastReceiver {
 
-    private Context mContext;
-    private String category;
-    private String query;
-    private Disposable dispose;
+    private Context context;
+    private Search v;
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        this.mContext = context;
-        retrieveSharedPreferences();
-        executeHttpRequestWithRetrofit();
+        this.context = context;
+        this.executeHttpRequestWithRetrofit();
         }
 
         private void executeHttpRequestWithRetrofit(){
-            dispose = MyNewsStreams.streamFetchSearch(query, null, null, category).subscribeWith(new DisposableObserver<Search>() {
+
+            SharedPreferences mSharedPreferences = context.getSharedPreferences(NotificationActivity.SHARED_PREF_NOTIF, Context.MODE_PRIVATE);
+            String query = mSharedPreferences.getString(NotificationActivity.QUERY_SEARCH, "");
+            String category = mSharedPreferences.getString(NotificationActivity.CHECKBOX_STRING, "");
+            Log.i("SHAREDPREF", query);
+            Log.i("SHAREDPREF", category);
+            Disposable disposable = MyNewsStreams.streamFetchSearch(query, "20190226", "20190227", category).subscribeWith(new DisposableObserver<Search>() {
                 @Override
                 public void onNext(Search value) {
                     Log.e("NOTIF", "on Next");
-                    if(value.getResponse().getDocs().size() > 0) {
-                        sendNotification(value.getResponse().getDocs().size());
-                    } else if
-                        (value.getResponse().getDocs().size() == 0) {
-                        sendNotification(0);
-                        }
-                    }
+                    v = value;
+                }
 
                 @Override
                 public void onError(Throwable e) {
@@ -58,19 +55,28 @@ public class MyAlarm extends BroadcastReceiver {
 
                 @Override
                 public void onComplete() {
+                    Log.e("NOTIF", "on Complete");
+                    Log.i("GETRESPONSE", String.valueOf(v.getResponse().getDocs().size()));
+                    if(v.getResponse().getDocs().size() > 0) {
+                        createNotification(v.getResponse().getDocs().size());
+                    }
                 }
             });
         }
 
-        private void sendNotification(int numberArticles){
-            Intent intent = new Intent(mContext, MainActivity.class);
-            PendingIntent pendingIntent = PendingIntent.getActivity(mContext, 0, intent, 0);
+        private void createNotification(int numberArticles) {
+
+            String channelId = "channel1";
+            CharSequence channelName = "Article channel1";
+
+            Intent intent = new Intent(context, MainActivity.class);
+            PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
 
             String notification_title = "MyNews";
             NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
             inboxStyle.setBigContentTitle("New articles available");
             inboxStyle.addLine("There is " + numberArticles + " article available");
-            NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(mContext, "default")
+            NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context, channelId)
                     .setSmallIcon(R.drawable.newyorktimesicon)
                     .setContentTitle(notification_title)
                     .setContentText("New articles available")
@@ -79,14 +85,28 @@ public class MyAlarm extends BroadcastReceiver {
                     .setContentIntent(pendingIntent)
                     .setStyle(inboxStyle);
 
-            NotificationManager notificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
-            notificationManager.notify(1, mBuilder.build());
-            Log.i("ALARM", "Je sonne !");
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                NotificationChannel channel = new NotificationChannel(channelId, channelName, NotificationManager.IMPORTANCE_HIGH);
+                NotificationManager notificationManager = context.getSystemService(NotificationManager.class);
+                notificationManager.createNotificationChannel(channel);
+                notificationManager.notify(1, mBuilder.build());
+            }
         }
 
-        private void retrieveSharedPreferences(){
-            SharedPreferences mSharedPreferences = mContext.getSharedPreferences(NotificationActivity.SHARED_PREF_NOTIF, Context.MODE_PRIVATE);
-            query = mSharedPreferences.getString(NotificationActivity.QUERY_SEARCH, null);
-            category = mSharedPreferences.getString(NotificationActivity.CHECKBOX_STRING, null);
+        private Date yesterday(){
+         final Calendar cal = Calendar.getInstance();
+         cal.add(Calendar.DATE, -1);
+         return cal.getTime();
+        }
+
+        private String getYesterdayDateString(){
+          DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+         return dateFormat.format(yesterday());
+        }
+
+        private String today(){
+          Date currentime = Calendar.getInstance().getTime();
+               DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+               return dateFormat.format(currentime);
         }
     }

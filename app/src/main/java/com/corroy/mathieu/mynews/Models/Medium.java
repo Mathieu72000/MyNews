@@ -24,7 +24,6 @@ public class Medium {
     @SerializedName("media-metadata")
     @Expose
     private List<MediaMetadatum> mediaMetadata = null;
-    private List<Multimedium> multimedia = null;
 
     public String getType() {
         return type;
@@ -72,13 +71,5 @@ public class Medium {
 
     public void setMediaMetadata(List<MediaMetadatum> mediaMetadata) {
         this.mediaMetadata = mediaMetadata;
-    }
-
-    public List<Multimedium> getMultimedia() {
-        return multimedia;
-    }
-
-    public void setMultimedia(List<Multimedium> multimedia) {
-        this.multimedia = multimedia;
     }
 }

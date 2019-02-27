@@ -61,19 +61,18 @@ public class TopStoriesViewHolder extends RecyclerView.ViewHolder {
         this.title.setText(nYTimesResult.getTitle());
 
         // --------------------------- /MEDIA/ ------------------------------
-//        List<Multimedium> multimediumList;
-//        multimediumList = nYTimesResult.getMultimedia();
-//        if (multimediumList != null && !multimediumList.isEmpty()) {
-//            Glide.with(this.itemView.getContext())
-//                    .load(multimediumList.get(0).getUrl())
-//                    .into(this.image);
-//        }
-//        Log.e("BUG", nYTimesResult.getMedia().toString());
-//        Log.e("BUG", nYTimesResult.getMedia().get(0).getMediaMetadata().get(0).toString());
-//        if (nYTimesResult != null && !nYTimesResult.getMedia().get(0).getMediaMetadata().get(0).getUrl().isEmpty()){
-//            Glide.with(this.itemView.getContext())
-//                    .load(nYTimesResult.getMedia().get(0).getMediaMetadata().get(0).getUrl())
-//                    .into(this.image);
-//            }
+        List<Multimedium> multimediumList;
+        multimediumList = nYTimesResult.getMultimedia();
+        if (multimediumList != null && !multimediumList.isEmpty()) {
+            Glide.with(this.itemView.getContext())
+                    .load(multimediumList.get(0).getUrl())
+                    .into(this.image);
+        }
+        if (nYTimesResult.getMedia() != null){
+            Glide.with(this.itemView.getContext())
+                    .load(nYTimesResult.getMedia().get(0).getMediaMetadata().get(0).getUrl())
+                    .apply(RequestOptions.centerCropTransform().error(R.drawable.newyorktimesicon).placeholder(R.drawable.newyorktimesicon))
+                    .into(this.image);
         }
     }
+}

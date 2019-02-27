@@ -104,17 +104,14 @@ public class TopStoriesFragment extends Fragment {
             @Override
             public void onNext(Article article) {
                 updateUI(article.getResults());
-                Log.e("TAG", "On Next");
             }
 
             @Override
             public void onError(Throwable e) {
-                Log.e("TAG", "On Error");
             }
 
             @Override
             public void onComplete() {
-                Log.e("TAG", "On Complete");
             }
         });
     }

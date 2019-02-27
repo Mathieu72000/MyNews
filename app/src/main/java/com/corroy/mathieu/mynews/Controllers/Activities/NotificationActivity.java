@@ -22,6 +22,7 @@ import com.corroy.mathieu.mynews.R;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,18 +33,18 @@ public class NotificationActivity extends AppCompatActivity {
     ImageButton backArrow;
     @BindView(R.id.notification_switch)
     Switch mSwitch;
-    //    @BindView(R.id.search__checkbox_arts)
-//    CheckBox checkboxArts;
-//    @BindView(R.id.search_checkbox_business)
-//    CheckBox checkboxBusiness;
-//    @BindView(R.id.search_checkbox_entrepreneurs)
-//    CheckBox checkboxEntrepreneurs;
-//    @BindView(R.id.search_checkbox_politics)
-//    CheckBox checkboxPolitics;
-//    @BindView(R.id.search_checkbox_sports)
-//    CheckBox checkboxSports;
-//    @BindView(R.id.search_checkbox_travel)
-//    CheckBox checkboxTravel;
+    @BindView(R.id.search__checkbox_arts)
+    CheckBox checkboxArts;
+    @BindView(R.id.search_checkbox_business)
+    CheckBox checkboxBusiness;
+    @BindView(R.id.search_checkbox_entrepreneurs)
+    CheckBox checkboxEntrepreneurs;
+    @BindView(R.id.search_checkbox_politics)
+    CheckBox checkboxPolitics;
+    @BindView(R.id.search_checkbox_sports)
+    CheckBox checkboxSports;
+    @BindView(R.id.search_checkbox_travel)
+    CheckBox checkboxTravel;
     @BindView(R.id.search_term_notification)
     TextInputEditText searchTermNotification;
 
@@ -52,7 +53,9 @@ public class NotificationActivity extends AppCompatActivity {
     public static final String SHARED_PREF_NOTIF = "shared_pref_notif";
     public static final String QUERY_SEARCH = "query_search";
     public static final String CHECKBOX_STRING = "checkbox_string";
+//    private String section = "type_of_material:News";
     private SharedPreferences.Editor editor = null;
+    String section = "type_of_material:News";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,18 +66,8 @@ public class NotificationActivity extends AppCompatActivity {
         treatmentNotification();
     }
 
-    private void createNotification() {
+    private void setAlarm() {
         Log.e("SWITCH", "activé");
-        if (Build.VERSION.SDK_INT < 26) {
-            return;
-        }
-        NotificationManager notificationManager =
-                (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
-        NotificationChannel channel = new NotificationChannel("default",
-                "Channel name",
-                NotificationManager.IMPORTANCE_DEFAULT);
-        channel.setDescription("Channel description");
-        notificationManager.createNotificationChannel(channel);
 
         alarmMgr = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(getApplicationContext(), MyAlarm.class);
@@ -99,41 +92,64 @@ public class NotificationActivity extends AppCompatActivity {
         final CheckBox business = findViewById(R.id.search_checkbox_business);
         final CheckBox arts = findViewById(R.id.search__checkbox_arts);
 
+        checkboxesList.clear();
+
         if (travel.isChecked()) {
             travel.setChecked(true);
             checkboxesList.add(travel);
-        } else if
+        } if
         (sports.isChecked()) {
             sports.setChecked(true);
             checkboxesList.add(sports);
-        } else if
+        } if
         (politics.isChecked()) {
             politics.setChecked(true);
             checkboxesList.add(politics);
-        } else if
+        } if
         (entrepreneurs.isChecked()) {
             entrepreneurs.setChecked(true);
             checkboxesList.add(entrepreneurs);
-        } else if
+        } if
         (business.isChecked()) {
             business.setChecked(true);
             checkboxesList.add(business);
-        } else if
+        } if
         (arts.isChecked()) {
             arts.setChecked(true);
             checkboxesList.add(arts);
         }
-        return String.valueOf(checkboxesList.size());
+
+        section = "type_of_material:News";
+
+        int count = 0;
+
+        for(int i = 0; i < checkboxesList.size(); i++) {
+            if (checkboxesList.get(i).isChecked()) {
+                if (count == 0) {
+                    section = section + " AND news_desk:(" + checkboxesList.get(i).getText().toString();
+                    count++;
+                }
+                else if (count > 0){
+                    section = section + " OR " + checkboxesList.get(i).getText().toString();
+                    count++;
+                }
+            }
+        }
+
+        if(count > 0) section = section + ")";
+        return section;
     }
 
         public void treatmentNotification(){
        mSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
         editor = getSharedPreferences(SHARED_PREF_NOTIF, MODE_PRIVATE).edit();
         if (isChecked) {
+            Log.e("EDITTEXT", checkboxVerification());
+            Log.e("EDITTEXT", searchTermNotification.getText().toString());
             if (checkboxVerification().equals("") && searchTermNotification.getText().toString().equals("")){
                 mSwitch.setChecked(false);
                 Toast.makeText(this, "Please enter a search and select at least one category", Toast.LENGTH_SHORT).show();
-            } else if (checkboxVerification().equals("")){
+            } else if (checkboxVerification().isEmpty()){
                 mSwitch.setChecked(false);
                 Toast.makeText(this, "Please select at least one category to search", Toast.LENGTH_SHORT).show();
             } else if (searchTermNotification.getText().toString().equals("")){
@@ -144,7 +160,7 @@ public class NotificationActivity extends AppCompatActivity {
                 editor.putString(CHECKBOX_STRING, checkboxVerification());
                 editor.apply();
             mSwitch.setChecked(true);
-            createNotification();
+            setAlarm();
         }
         if (!isChecked) {
             mSwitch.setChecked(false);

@@ -31,7 +31,6 @@ public class SearchActivity extends AppCompatActivity {
     private EditText endDate;
     private DatePickerDialog.OnDateSetListener mDateListener;
     private DatePickerDialog.OnDateSetListener mDateListener2;
-    private TextInputEditText searchTerm;
     private Date date;
     private String sDate = "";
     private String eDate = "";
@@ -139,7 +138,7 @@ public class SearchActivity extends AppCompatActivity {
             SimpleDateFormat inputFormat = new SimpleDateFormat(inputPattern);
             SimpleDateFormat outputFormat = new SimpleDateFormat(outputPattern);
 
-            searchTerm = findViewById(R.id.search_query_term);
+            TextInputEditText searchTerm = findViewById(R.id.search_query_term);
 
             int count = 0;
 

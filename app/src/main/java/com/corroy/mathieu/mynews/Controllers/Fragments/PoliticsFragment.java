@@ -103,17 +103,14 @@ public class PoliticsFragment extends Fragment {
                     @Override
                     public void onNext(Search search) {
                         updateUI(search.getResponse().getDocs());
-                        Log.e("POLITICS", "ON NEXT");
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e("POLITICS", e.getMessage());
                     }
 
                     @Override
                     public void onComplete() {
-                        Log.e("POLITICS", "On Complete");
                     }
                 });
     }
