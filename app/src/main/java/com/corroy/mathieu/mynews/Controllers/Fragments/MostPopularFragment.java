@@ -6,12 +6,9 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.RequestManager;
 import com.corroy.mathieu.mynews.Controllers.Activities.WebViewActivity;
 import com.corroy.mathieu.mynews.Controllers.Utils.ItemClickSupport;
 import com.corroy.mathieu.mynews.Controllers.Utils.MyNewsStreams;
@@ -28,17 +25,18 @@ import io.reactivex.observers.DisposableObserver;
 
 public class MostPopularFragment extends Fragment{
 
-    // Declare the RecyclerView
+    // FOR DESIGN
     @BindView(R.id.mostPopularRecyclerView)
     RecyclerView mRecyclerView;
 
-    // Declare Subscription
+    // FOR DATA
     private Disposable disposable;
 
-
+    // Declare new list of Result
     private List<Result> mResultList;
-    private TopStoriesAdapter mostPopularAdapter;
 
+    // Declare the Adapter
+    private TopStoriesAdapter mostPopularAdapter;
 
     public MostPopularFragment() {
         // Required empty public constructor
@@ -60,6 +58,7 @@ public class MostPopularFragment extends Fragment{
 
         this.configureRecyclerView();
 
+        // Call the Stream
         this.executeHttpRequestWithRetrofit();
 
         this.configureOnClickRecyclerView();
@@ -72,6 +71,7 @@ public class MostPopularFragment extends Fragment{
         this.disposeWhenDestroy();
     }
 
+    // Configure RecyclerView, Adapter, LayoutManager & glue it together, and a separator
     private void configureRecyclerView(){
 
         this.mResultList = new ArrayList<>();
@@ -83,6 +83,7 @@ public class MostPopularFragment extends Fragment{
         this.mRecyclerView.addItemDecoration(new DividerItemDecoration(mRecyclerView.getContext(), DividerItemDecoration.VERTICAL));
     }
 
+    // Configure the RecyclerView to handle click on a news and display it in the webView
     private void configureOnClickRecyclerView(){
         ItemClickSupport.addTo(mRecyclerView)
                 .setOnItemClickListener((recyclerView, position, v) -> {
@@ -93,6 +94,7 @@ public class MostPopularFragment extends Fragment{
                 });
     }
 
+    // Create a new subscriber
     private void executeHttpRequestWithRetrofit(){
         int period = 7;
         this.disposable = MyNewsStreams.streamFetchMostPopular(period, "pX69N3N5cVmjfynWXnSvWQ92GaxGuIAh")
@@ -112,10 +114,12 @@ public class MostPopularFragment extends Fragment{
         });
     }
 
+    // Dispose subscription
     private void disposeWhenDestroy() {
         if (this.disposable != null && !this.disposable.isDisposed()) this.disposable.dispose();
     }
 
+    // Display the list in the RecyclerView and refresh the adapter
     private void updateUI(List<Result> res){
         mResultList.clear();
         mResultList.addAll(res);

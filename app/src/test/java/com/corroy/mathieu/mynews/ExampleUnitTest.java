@@ -9,10 +9,8 @@ import io.reactivex.observers.TestObserver;
 import io.reactivex.schedulers.Schedulers;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-
 import static org.junit.Assert.*;
 
 public class ExampleUnitTest {

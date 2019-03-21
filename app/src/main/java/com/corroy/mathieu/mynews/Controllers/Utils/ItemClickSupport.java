@@ -2,7 +2,6 @@ package com.corroy.mathieu.mynews.Controllers.Utils;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-
 import com.corroy.mathieu.mynews.R;
 
 public class ItemClickSupport {

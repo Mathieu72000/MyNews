@@ -9,13 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
-import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-
-import com.corroy.mathieu.mynews.Controllers.Fragments.SearchFragment;
 import com.corroy.mathieu.mynews.Controllers.Utils.MyNewsStreams;
 import com.corroy.mathieu.mynews.Models.Search;
 import com.corroy.mathieu.mynews.R;
@@ -23,15 +17,10 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-
-import butterknife.BindView;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableObserver;
 
 public class MyAlarm extends BroadcastReceiver {
-
-    @BindView(R.id.search_term_notification)
-    TextInputEditText searchterm;
 
     private Context context;
     private Search v;
@@ -44,24 +33,21 @@ public class MyAlarm extends BroadcastReceiver {
         this.executeHttpRequestWithRetrofit();
         }
 
+        // Send a request when the alarm ring
         private void executeHttpRequestWithRetrofit(){
             this.retrieveSharedPreferences();
             Disposable disposable = MyNewsStreams.streamFetchSearch(query, getYesterdayDateString(), today(), category).subscribeWith(new DisposableObserver<Search>() {
                 @Override
                 public void onNext(Search value) {
-                    Log.e("NOTIF", "on Next");
                     v = value;
                 }
 
                 @Override
                 public void onError(Throwable e) {
-                    Log.e("NOTIF", "on Error");
                 }
 
                 @Override
                 public void onComplete() {
-                    Log.e("NOTIF", "on Complete");
-                    Log.i("GETRESPONSE", String.valueOf(v.getResponse().getDocs().size()));
                     if(v.getResponse().getDocs().size() > 0) {
                         createNotification(v.getResponse().getDocs().size());
                     }
@@ -69,6 +55,7 @@ public class MyAlarm extends BroadcastReceiver {
             });
         }
 
+        // Create a new Notification channel
         private void createNotification(int numberArticles) {
 
             String channelId = "channel1";
@@ -102,23 +89,27 @@ public class MyAlarm extends BroadcastReceiver {
             }
         }
 
+        // Retrieve the choice of checkbox(es), and keyword(s) of the user
         private void retrieveSharedPreferences(){
             SharedPreferences mSharedPreferences = context.getSharedPreferences(NotificationActivity.SHARED_PREF_NOTIF, Context.MODE_PRIVATE);
             query = mSharedPreferences.getString(NotificationActivity.QUERY_SEARCH, "");
             category = mSharedPreferences.getString(NotificationActivity.CHECKBOX_STRING, "");
         }
 
+        // Retrieve the date of yesterday for the request parameters
         private Date yesterday(){
          final Calendar cal = Calendar.getInstance();
          cal.add(Calendar.DATE, -1);
          return cal.getTime();
         }
 
+        // Format the date of yesterday()
         private String getYesterdayDateString(){
           @SuppressLint("SimpleDateFormat") DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
          return dateFormat.format(yesterday());
         }
 
+        // Retrieve the date of today for the request parameters
         private String today(){
           Date currentTime = Calendar.getInstance().getTime();
                @SuppressLint("SimpleDateFormat") DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");

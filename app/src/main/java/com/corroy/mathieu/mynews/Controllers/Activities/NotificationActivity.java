@@ -26,7 +26,7 @@ public class NotificationActivity extends AppCompatActivity {
     ImageButton backArrow;
     @BindView(R.id.notification_switch)
     Switch mSwitch;
-    @BindView(R.id.search__checkbox_arts)
+    @BindView(R.id.search_checkbox_arts)
     CheckBox checkboxArts;
     @BindView(R.id.search_checkbox_business)
     CheckBox checkboxBusiness;
@@ -41,7 +41,7 @@ public class NotificationActivity extends AppCompatActivity {
     @BindView(R.id.search_term_notification)
     TextInputEditText searchTermNotification;
 
-    private AlarmManager alarmMgr = null;
+    private AlarmManager alarmMgr;
     private PendingIntent alarmIntent;
     public static final String SHARED_PREF_NOTIF = "shared_pref_notif";
     public static final String QUERY_SEARCH = "query_search";
@@ -56,10 +56,12 @@ public class NotificationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_notification);
         ButterKnife.bind(this);
         backArrow.setOnClickListener(v -> startActivity());
+        // Retrieve the preferences
         restoreSharedPreferences();
         treatmentNotification();
     }
 
+    // Verify if checkbox is checked, add it to a list and add the section for the request
     public void checkboxVerification() {
 
         editor = getSharedPreferences(SHARED_PREF_NOTIF, MODE_PRIVATE).edit();
@@ -109,10 +111,9 @@ public class NotificationActivity extends AppCompatActivity {
             }
                 editor.putString(CHECKBOX_STRING, categories);
                 editor.apply();
-                if (checkboxesList.size() > 0) section = section + ")";
-
     }
 
+    // Check is checkboxes list and search is not empty and add them to sharedPreference and set the alarm
         public void treatmentNotification(){
        mSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
            editor = getSharedPreferences(SHARED_PREF_NOTIF, MODE_PRIVATE).edit();
@@ -137,6 +138,7 @@ public class NotificationActivity extends AppCompatActivity {
                    Log.e("SWITCH", "activé");
                }
            } else {
+               // If the switch is set to OFF we clear the sharedPreferences and we cancel the alarm
                editor.clear().apply();
                mSwitch.setChecked(false);
                cancelAlarm();
@@ -144,11 +146,13 @@ public class NotificationActivity extends AppCompatActivity {
              }
           });
         }
+
     private void startActivity() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 
+    // Configure the alarm
     private void setAlarm() {
 
         alarmMgr = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
@@ -163,11 +167,13 @@ public class NotificationActivity extends AppCompatActivity {
                 , AlarmManager.INTERVAL_DAY, alarmIntent);
     }
 
+    // Cancel the alarm if she's enabled
     public void cancelAlarm(){
         if(alarmMgr != null && alarmIntent != null)
         alarmMgr.cancel(alarmIntent);
     }
 
+    // Retrieve the preferences and display them on the notification screen
     private void restoreSharedPreferences() {
         SharedPreferences mSharedPreferences = getSharedPreferences(SHARED_PREF_NOTIF, Context.MODE_PRIVATE);
         String query = mSharedPreferences.getString(QUERY_SEARCH, "");

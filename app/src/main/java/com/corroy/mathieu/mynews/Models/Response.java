@@ -12,9 +12,4 @@ public class Response {
     public List<Doc> getDocs() {
         return docs;
     }
-
-    public void setDocs(List<Doc> docs) {
-        this.docs = docs;
-    }
-
 }

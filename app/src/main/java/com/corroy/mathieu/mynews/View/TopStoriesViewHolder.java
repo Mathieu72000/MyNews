@@ -1,15 +1,12 @@
 package com.corroy.mathieu.mynews.View;
 
+import android.annotation.SuppressLint;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.request.RequestOptions;
-import com.corroy.mathieu.mynews.Models.Doc;
 import com.corroy.mathieu.mynews.Models.Multimedium;
 import com.corroy.mathieu.mynews.Models.Result;
 import com.corroy.mathieu.mynews.R;
@@ -17,7 +14,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -48,8 +44,8 @@ public class TopStoriesViewHolder extends RecyclerView.ViewHolder {
         this.section.setText(mSection);
         // -------------------------- /DATE/ -----------------------------
         String parseDate = nYTimesResult.getPublishedDate();
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        SimpleDateFormat newFormat = new SimpleDateFormat("dd/MM/yyyy");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat newFormat = new SimpleDateFormat("dd/MM/yyyy");
         try {
             Date date = format.parse(parseDate);
             parseDate = newFormat.format(date);

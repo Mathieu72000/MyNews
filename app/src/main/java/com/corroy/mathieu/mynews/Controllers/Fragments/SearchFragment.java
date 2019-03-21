@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,17 +28,24 @@ import io.reactivex.observers.DisposableObserver;
 
 public class SearchFragment extends Fragment {
 
-    // Declare the RecyclerView
+    // FOR DESIGN
     @BindView(R.id.searchRecyclerView)
     RecyclerView recyclerView;
 
+    // FOR DATA
+    private Disposable disposable;
+
+    // Declare new list of Doc
+    private List<Doc> mDocList;
+
+    // Declare the Adapter
     private SearchAdapter searchAdapter;
+
     private String query = "";
     private String start_date = "";
     private String end_date = "";
     private String section = "";
-    private List<Doc> mDocList;
-    private Disposable disposable;
+    private ProgressDialog mProgressDialog;
 
     public SearchFragment() {
         // Required empty public constructor
@@ -67,6 +73,7 @@ public class SearchFragment extends Fragment {
 
         this.configureRecyclerView();
 
+        // Call the stream
         this.executeHttpRequestWithRetrofit();
 
         this.configureOnClickRecyclerView();
@@ -79,17 +86,7 @@ public class SearchFragment extends Fragment {
         disposeWhenDestroy();
     }
 
-
-    private void configureOnClickRecyclerView(){
-        ItemClickSupport.addTo(recyclerView)
-                .setOnItemClickListener((recyclerView, position, v) -> {
-                    Doc doc = mDocList.get(position);
-                    Intent intent = new Intent(getContext(), WebViewActivity.class);
-                    intent.putExtra("Url", doc.getWebUrl());
-                    startActivity(intent);
-                });
-    }
-
+    // Configure RecyclerView Adapter, LayoutManager & glue it together, and add a separator
     private void configureRecyclerView() {
         this.mDocList = new ArrayList<>();
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
@@ -100,6 +97,18 @@ public class SearchFragment extends Fragment {
         this.recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL));
     }
 
+    // Configure the RecyclerView to handle click on a news and display it in the webView
+    private void configureOnClickRecyclerView(){
+        ItemClickSupport.addTo(recyclerView)
+                .setOnItemClickListener((recyclerView, position, v) -> {
+                    Doc doc = mDocList.get(position);
+                    Intent intent = new Intent(getContext(), WebViewActivity.class);
+                    intent.putExtra("Url", doc.getWebUrl());
+                    startActivity(intent);
+                });
+    }
+
+    // Create a new subscriber
     private void executeHttpRequestWithRetrofit(){
         showProgressDialog();
         this.disposable = MyNewsStreams.streamFetchSearch(query, start_date, end_date, section)
@@ -124,10 +133,12 @@ public class SearchFragment extends Fragment {
         });
     }
 
+    // Dispose subscription
     private void disposeWhenDestroy(){
         if (this.disposable != null && this.disposable.isDisposed()) this.disposable.dispose();
     }
 
+    // Display the list in the RecyclerView and refresh the adapter
     private void updateUISearch(List<Doc> docs){
         mDocList.clear();
         mDocList.addAll(docs);
@@ -137,8 +148,7 @@ public class SearchFragment extends Fragment {
         searchAdapter.notifyDataSetChanged();
     }
 
-    private ProgressDialog mProgressDialog;
-
+    // Create a new ProgressDialog for loading screen
     public void showProgressDialog(){
         if(mProgressDialog == null){
             mProgressDialog = new ProgressDialog(getActivity());
@@ -149,6 +159,7 @@ public class SearchFragment extends Fragment {
         mProgressDialog.show();
     }
 
+    // Dismiss the progress dialog when loading is finished
     public void dismissProgressDialog(){
         if(mProgressDialog != null){
             mProgressDialog.dismiss();

@@ -1,13 +1,9 @@
 package com.corroy.mathieu.mynews.Controllers.Utils;
 
 import com.corroy.mathieu.mynews.Models.Article;
-import com.corroy.mathieu.mynews.Models.Doc;
-import com.corroy.mathieu.mynews.Models.Result;
 import com.corroy.mathieu.mynews.Models.Search;
-
 import java.util.concurrent.TimeUnit;
 import io.reactivex.Observable;
-import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 

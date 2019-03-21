@@ -1,6 +1,7 @@
 package com.corroy.mathieu.mynews.Controllers.Activities;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
@@ -15,6 +16,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 import com.corroy.mathieu.mynews.R;
 import com.corroy.mathieu.mynews.View.PagerAdapter;
+import java.util.Objects;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -82,13 +84,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
+    // Create a new menu and inflate with the layout
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.activity_settings_menu, menu);
         return true;
     }
 
     @Override
-    public boolean onNavigationItemSelected(MenuItem item){
+    public boolean onNavigationItemSelected(@NonNull MenuItem item){
 
         int id = item.getItemId();
 
@@ -120,7 +123,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     // Configure Toolbar
     private void configureToolbar() {
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("My News");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("My News");
     }
 
     // Configure DrawerLayout

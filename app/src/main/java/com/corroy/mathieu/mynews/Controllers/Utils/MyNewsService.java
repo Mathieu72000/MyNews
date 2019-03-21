@@ -1,9 +1,7 @@
 package com.corroy.mathieu.mynews.Controllers.Utils;
 
 import com.corroy.mathieu.mynews.Models.Article;
-import com.corroy.mathieu.mynews.Models.Doc;
 import com.corroy.mathieu.mynews.Models.Search;
-
 import io.reactivex.Observable;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -12,12 +10,11 @@ import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
-
 public interface MyNewsService {
 
-    // TOP STORIES
-
     // Create a GET request on a URL complement (EndPoints)
+
+    // TOP STORIES
     @GET("svc/topstories/v2/{section}.json")
     Observable<Article> getTopStoriesArticle(@Path("section") String section,
                                              @Query("api-key") String apiKey);

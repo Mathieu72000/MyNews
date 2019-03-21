@@ -1,9 +1,8 @@
 package com.corroy.mathieu.mynews.Controllers.Activities;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.design.widget.TextInputEditText;
@@ -14,7 +13,6 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 import com.corroy.mathieu.mynews.R;
 import java.text.ParseException;
@@ -24,22 +22,28 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class SearchActivity extends AppCompatActivity {
 
-    private EditText startDate;
-    private EditText endDate;
+    @BindView(R.id.search_begin_date) EditText startDate;
+    @BindView(R.id.search_end_date) EditText endDate;
+    @BindView(R.id.back_arrow) ImageButton backArrow;
+    @BindView(R.id.search_button) Button searchButton;
+    @BindView(R.id.search_checkbox_arts) CheckBox cbArt;
+    @BindView(R.id.search_checkbox_business) CheckBox cbBusiness;
+    @BindView(R.id.search_checkbox_entrepreneurs) CheckBox cbEntrepreneur;
+    @BindView(R.id.search_checkbox_politics) CheckBox cbPolitics;
+    @BindView(R.id.search_checkbox_sports) CheckBox cbSports;
+    @BindView(R.id.search_checkbox_travel) CheckBox cbTravel;
+    @BindView(R.id.search_term_notification) TextInputEditText searchTerm;
+
     private DatePickerDialog.OnDateSetListener mDateListener;
     private DatePickerDialog.OnDateSetListener mDateListener2;
     private Date date;
     private String sDate = "";
     private String eDate = "";
-    private CheckBox cbArt;
-    private CheckBox cbBusiness;
-    private CheckBox cbPolitics;
-    private CheckBox cbEntrepeneur;
-    private CheckBox cbTravel;
-    private CheckBox cbSports;
     private String section = "type_of_material:News";
     private final List<CheckBox> checkBox = new ArrayList<>();
 
@@ -47,13 +51,12 @@ public class SearchActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+        ButterKnife.bind(this);
 
-        ImageButton imageButton = findViewById(R.id.back_arrow);
-        imageButton.setOnClickListener(view -> startActivity());
+        // Configure the arrow button to get back
+        backArrow.setOnClickListener(view -> startActivity());
 
-        startDate = findViewById(R.id.search_begin_date);
-        endDate = findViewById(R.id.search_end_date);
-
+        // Create a new date picker
         startDate.setOnClickListener(v -> {
             Calendar calendar = Calendar.getInstance();
             int year = calendar.get(Calendar.YEAR);
@@ -79,10 +82,11 @@ public class SearchActivity extends AppCompatActivity {
             if (dayOfMonth < 10) {
                 selectedDay = "0" + dayOfMonth;
             }
-            String date = selectedMonth + "/" + selectedDay + "/" + year;
+            String date = selectedDay + "/" + selectedMonth + "/" + year;
             startDate.setText(date);
         };
 
+        // Create a new date picker
         endDate.setOnClickListener(v -> {
             Calendar calendar2 = Calendar.getInstance();
             int year = calendar2.get(Calendar.YEAR);
@@ -108,40 +112,32 @@ public class SearchActivity extends AppCompatActivity {
             if (dayOfMonth < 10) {
                 selectedDay = "0" + dayOfMonth;
             }
-                String date = selectedMonth + "/" + selectedDay + "/" + year;
+                String date =  selectedDay + "/" + selectedMonth + "/" + year;
                 endDate.setText(date);
         };
 
-        Button searchButton = findViewById(R.id.search_button);
+        // Configure the search button and add a list of checkbox, section, dates
         searchButton.setOnClickListener(v -> {
+
             checkBox.clear();
             eDate = "";
             sDate = "";
             section = "type_of_material:News";
-
-            cbArt = findViewById(R.id.search__checkbox_arts);
-            cbBusiness = findViewById(R.id.search_checkbox_business);
-            cbEntrepeneur = findViewById(R.id.search_checkbox_entrepreneurs);
-            cbPolitics = findViewById(R.id.search_checkbox_politics);
-            cbSports = findViewById(R.id.search_checkbox_sports);
-            cbTravel = findViewById(R.id.search_checkbox_travel);
-
             checkBox.add(cbArt);
             checkBox.add(cbBusiness);
-            checkBox.add(cbEntrepeneur);
+            checkBox.add(cbEntrepreneur);
             checkBox.add(cbPolitics);
             checkBox.add(cbSports);
             checkBox.add(cbTravel);
 
             String inputPattern = "dd/MM/yyyy";
             String outputPattern = "yyyyMMdd";
-            SimpleDateFormat inputFormat = new SimpleDateFormat(inputPattern);
-            SimpleDateFormat outputFormat = new SimpleDateFormat(outputPattern);
-
-            TextInputEditText searchTerm = findViewById(R.id.search_term_notification);
+            @SuppressLint("SimpleDateFormat") SimpleDateFormat inputFormat = new SimpleDateFormat(inputPattern);
+            @SuppressLint("SimpleDateFormat") SimpleDateFormat outputFormat = new SimpleDateFormat(outputPattern);
 
             int count = 0;
 
+            // Verify is a checkbox is checked and add the section for the request
             for(int i = 0; i < checkBox.size(); i++) {
                 if (checkBox.get(i).isChecked()) {
                     if (count == 0) {

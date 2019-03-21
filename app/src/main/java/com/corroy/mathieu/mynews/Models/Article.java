@@ -6,21 +6,9 @@ import com.google.gson.annotations.SerializedName;
 
 public class Article {
 
-    @SerializedName("status")
-    @Expose
-    private String status;
-    @SerializedName("copyright")
-    @Expose
-    private String copyright;
     @SerializedName("section")
     @Expose
     private String section;
-    @SerializedName("last_updated")
-    @Expose
-    private String lastUpdated;
-    @SerializedName("num_results")
-    @Expose
-    private Integer numResults;
     @SerializedName("results")
     @Expose
     public List<Result> results = null;

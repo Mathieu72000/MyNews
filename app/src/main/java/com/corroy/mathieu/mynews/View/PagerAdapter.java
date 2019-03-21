@@ -5,7 +5,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import com.corroy.mathieu.mynews.Controllers.Fragments.MostPopularFragment;
 import com.corroy.mathieu.mynews.Controllers.Fragments.PoliticsFragment;
-import com.corroy.mathieu.mynews.Controllers.Fragments.SearchFragment;
 import com.corroy.mathieu.mynews.Controllers.Fragments.TopStoriesFragment;
 
 public class PagerAdapter extends FragmentPagerAdapter {
