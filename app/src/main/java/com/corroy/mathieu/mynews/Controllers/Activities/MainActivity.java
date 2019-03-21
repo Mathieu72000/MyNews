@@ -1,8 +1,5 @@
 package com.corroy.mathieu.mynews.Controllers.Activities;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -18,9 +15,6 @@ import android.view.MenuItem;
 import android.widget.Toast;
 import com.corroy.mathieu.mynews.R;
 import com.corroy.mathieu.mynews.View.PagerAdapter;
-
-import java.util.Calendar;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 

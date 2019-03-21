@@ -71,7 +71,7 @@ public class TopStoriesViewHolder extends RecyclerView.ViewHolder {
         if (nYTimesResult.getMedia() != null){
             Glide.with(this.itemView.getContext())
                     .load(nYTimesResult.getMedia().get(0).getMediaMetadata().get(0).getUrl())
-                    .apply(RequestOptions.centerCropTransform().error(R.drawable.newyorktimesicon).placeholder(R.drawable.newyorktimesicon))
+                    .apply(RequestOptions.centerCropTransform().error(R.drawable.nytlogo).placeholder(R.drawable.nytlogo))
                     .into(this.image);
         }
     }

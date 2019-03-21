@@ -138,7 +138,7 @@ public class SearchActivity extends AppCompatActivity {
             SimpleDateFormat inputFormat = new SimpleDateFormat(inputPattern);
             SimpleDateFormat outputFormat = new SimpleDateFormat(outputPattern);
 
-            TextInputEditText searchTerm = findViewById(R.id.search_query_term);
+            TextInputEditText searchTerm = findViewById(R.id.search_term_notification);
 
             int count = 0;
 

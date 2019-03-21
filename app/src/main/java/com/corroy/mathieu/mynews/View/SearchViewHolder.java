@@ -65,7 +65,7 @@ public class SearchViewHolder extends RecyclerView.ViewHolder {
         List<Multimedium> multimediumList;
         multimediumList = doc.getMultimedia();
         if(multimediumList.isEmpty()){
-            this.imageSearch.setImageResource(R.drawable.newyorktimesicon);
+            this.imageSearch.setImageResource(R.drawable.nytlogo);
         } else {
             for (int i = 0; i < multimediumList.size(); i++){
                 if(multimediumList.get(i).getSubtype().equals("thumbnail")){
