@@ -28,7 +28,7 @@
             android:textSize="20sp"
             android:layout_margin="15dp"
             android:textColor="@color/white"
-            android:text="Search Articles"/>
+            android:text="@string/search_articles"/>
 
     </LinearLayout>
 
@@ -52,7 +52,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
                 android:layout_margin="15dp"
-                android:hint="Begin Date"
+                android:hint="@string/begin_date"
                 android:inputType="date"
                 android:ems="10" />
 
@@ -72,7 +72,7 @@
             android:layout_margin="15dp"
             android:inputType="date"
             android:ems="10"
-            android:hint="End Date"/>
+            android:hint="@string/end_date"/>
 
     </android.support.design.widget.TextInputLayout>
 
@@ -86,7 +86,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
-        android:text="SEARCH"
+        android:text="@string/search"
         android:textColor="@color/white"
         android:background="#26C4EC"/>
 

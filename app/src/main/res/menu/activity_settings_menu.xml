@@ -21,10 +21,9 @@
 
     </group>
 
-      <item android:title="Search"
+      <item android:title="@string/search_menu"
           android:id="@+id/search"
           android:icon="@drawable/searchicon"
           app:showAsAction="ifRoom"/>
-
 
 </menu>
